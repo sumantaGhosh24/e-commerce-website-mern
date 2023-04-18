@@ -8,6 +8,7 @@ const cookieParser = require("cookie-parser");
 const helmet = require("helmet");
 
 const connectDB = require("./lib/connectDb");
+const corsOptions = require("./lib/corsOptions");
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -17,7 +18,7 @@ connectDB();
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(helmet());
-app.use(cors({origin: ["http://localhost:3030"]}));
+app.use(cors(corsOptions));
 app.use(morgan("dev"));
 app.use(cookieParser());
 

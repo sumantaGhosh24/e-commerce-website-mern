@@ -1,25 +1,5 @@
 const Category = require("../models/categoryModel");
-
-function structureCategories(categories, parentId = null) {
-  const categoryList = [];
-  let category;
-  if (parentId == null) {
-    category = categories.filter((cat) => cat.parentId == undefined);
-  } else {
-    category = categories.filter((cat) => cat.parentId == parentId);
-  }
-  for (let cat of category) {
-    categoryList.push({
-      _id: cat._id,
-      name: cat.name,
-      parentId: cat.parentId,
-      image: cat.image,
-      createdBy: cat.createdBy,
-      children: structureCategories(categories, cat._id),
-    });
-  }
-  return categoryList;
-}
+const Product = require("../models/productModel");
 
 const categoryCtrl = {
   getCategories: async (req, res) => {
@@ -28,15 +8,14 @@ const categoryCtrl = {
         "createdBy",
         "_id username email mobileNumber image"
       );
-      const categoryList = structureCategories(categories);
-      return res.json({categoryList});
+      return res.json(categories);
     } catch (error) {
       return res.status(500).json({message: error.message});
     }
   },
   createCategory: async (req, res) => {
     try {
-      const {name, image, parentId} = req.body;
+      const {name, image} = req.body;
       const createdBy = req.id;
       const category = await Category.findOne({name});
       if (category)
@@ -46,7 +25,6 @@ const categoryCtrl = {
       const newCategory = new Category({
         name: name.toLowerCase(),
         image,
-        parentId,
         createdBy,
       });
       await newCategory.save();
@@ -57,16 +35,11 @@ const categoryCtrl = {
   },
   deleteCategory: async (req, res) => {
     try {
-      const category = await Category.findOne({category: req.params.id});
-      if (category)
+      const products = await Product.findOne({category: req.params.id});
+      if (products)
         return res.status(400).json({
-          message: "Please Delete All Category of this Category First.",
+          message: "Please delete all product of this category first.",
         });
-      const cat = await Category.find({parentId: req.params.id});
-      if (cat.length === 1)
-        return res
-          .status(400)
-          .json({message: "Please Delete all sub Category of this Category."});
       await Category.findByIdAndDelete(req.params.id);
       return res.json({message: "Category Deleted."});
     } catch (err) {
@@ -75,18 +48,17 @@ const categoryCtrl = {
   },
   updateCategory: async (req, res) => {
     try {
-      const {name, image, parentId} = req.body;
-      const cat = {name, image};
-      if (parentId !== "") {
-        cat.parentId = parentId;
+      const {id, name, image} = req.body;
+      if (!id || !name || !image) {
+        return res.status(400).json({message: "All fields are required."});
       }
-      const category = await Category.findByIdAndUpdate(req.params.id, cat, {
-        new: true,
-      });
-      if (!category)
-        return res
-          .status(400)
-          .json({message: "This Category Does Not Exists."});
+      const category = await Category.findById(id).exec();
+      if (!category) {
+        return res.status(400).json({message: "Category not found."});
+      }
+      category.name = name;
+      category.image = image;
+      await category.save();
       return res.status(200).json({message: "Category updated successful."});
     } catch (error) {
       return res.status(500).json({message: error.message});

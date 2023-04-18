@@ -1,6 +1,19 @@
 const Review = require("../models/reviewModel");
 
 const reviewCtrl = {
+  getAllReviews: async (req, res) => {
+    try {
+      const reviews = await Review.find()
+        .populate("user", "username email image")
+        .populate("product", "title image");
+      if (!reviews) {
+        return res.status(400).json({message: "No Review Exists."});
+      }
+      return res.status(200).json(reviews);
+    } catch (error) {
+      return res.status(500).json({message: error.message});
+    }
+  },
   getReviews: async (req, res) => {
     try {
       const reviews = await Review.find({product: req.params.product}).populate(

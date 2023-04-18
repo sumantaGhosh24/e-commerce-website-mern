@@ -1,35 +1,134 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React from "react";
+import {Routes, Route} from "react-router-dom";
+import {ToastContainer} from "react-toastify";
 
-function App() {
-  const [count, setCount] = useState(0)
+import "react-toastify/dist/ReactToastify.css";
 
+import {AuthLayout, Layout} from "./layouts";
+import {
+  Public,
+  Register,
+  Login,
+  Welcome,
+  Dashboard,
+  AdminManageUser,
+  AdminManageReview,
+  AdminManageProduct,
+  AdminCreateProduct,
+  AdminUpdateProduct,
+  AdminManageOrder,
+  AdminUpdateOrder,
+  AdminManageCategory,
+  AdminCreateCategory,
+  AdminUpdateCategory,
+  AdminManageBrand,
+  AdminCreateBrand,
+  AdminUpdateBrand,
+  Profile,
+  MyReviews,
+  ProductDetailed,
+  MyOrder,
+  MyCart,
+} from "./pages";
+import {PersistLogin, RequireUser, RequireAdmin} from "./components";
+
+const App = () => {
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </div>
-  )
-}
+    <>
+      <ToastContainer />
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Public />} />
+          <Route path="login" element={<Login />} />
+          <Route path="register" element={<Register />} />
+          <Route element={<PersistLogin />}>
+            <Route element={<AuthLayout />}>
+              {/* user routes */}
+              <Route
+                path="welcome"
+                element={<RequireUser elm={<Welcome />} />}
+              />
+              <Route
+                path="profile"
+                element={<RequireUser elm={<Profile />} />}
+              />
+              <Route
+                path="my-reviews"
+                element={<RequireUser elm={<MyReviews />} />}
+              />
+              <Route
+                path="product/:id"
+                element={<RequireUser elm={<ProductDetailed />} />}
+              />
+              <Route
+                path="my-order"
+                element={<RequireUser elm={<MyOrder />} />}
+              />
+              <Route path="cart" element={<RequireUser elm={<MyCart />} />} />
 
-export default App
+              {/* admin routes */}
+              <Route
+                path="dashboard"
+                element={<RequireAdmin elm={<Dashboard />} />}
+              />
+              <Route
+                path="admin-users"
+                element={<RequireAdmin elm={<AdminManageUser />} />}
+              />
+              <Route
+                path="admin-reviews"
+                element={<RequireAdmin elm={<AdminManageReview />} />}
+              />
+              <Route
+                path="admin-products"
+                element={<RequireAdmin elm={<AdminManageProduct />} />}
+              />
+              <Route
+                path="admin-create-product"
+                element={<RequireAdmin elm={<AdminCreateProduct />} />}
+              />
+              <Route
+                path="admin-product/:id"
+                element={<RequireAdmin elm={<AdminUpdateProduct />} />}
+              />
+              <Route
+                path="admin-orders"
+                element={<RequireAdmin elm={<AdminManageOrder />} />}
+              />
+              <Route
+                path="admin-order/:id"
+                element={<RequireAdmin elm={<AdminUpdateOrder />} />}
+              />
+              <Route
+                path="admin-category"
+                element={<RequireAdmin elm={<AdminManageCategory />} />}
+              />
+              <Route
+                path="admin-create-category"
+                element={<RequireAdmin elm={<AdminCreateCategory />} />}
+              />
+              <Route
+                path="admin-category/:id"
+                element={<RequireAdmin elm={<AdminUpdateCategory />} />}
+              />
+              <Route
+                path="admin-brand"
+                element={<RequireAdmin elm={<AdminManageBrand />} />}
+              />
+              <Route
+                path="admin-create-brand"
+                element={<RequireAdmin elm={<AdminCreateBrand />} />}
+              />
+              <Route
+                path="admin-brand/:id"
+                element={<RequireAdmin elm={<AdminUpdateBrand />} />}
+              />
+            </Route>
+          </Route>
+        </Route>
+      </Routes>
+    </>
+  );
+};
+
+export default App;

@@ -25,4 +25,6 @@ router.patch("/addcart", auth, userCtrl.addCart);
 
 router.get("/getcart", auth, userCtrl.getCart);
 
+router.get("/dashboard", authAdmin, userCtrl.getDashboard);
+
 module.exports = router;

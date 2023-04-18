@@ -9,10 +9,8 @@ router.get("/products", productCtrl.getProducts);
 
 router.post("/product", authAdmin, productCtrl.createProduct);
 
-router
-  .route("/product/:id")
-  .get(productCtrl.getProduct)
-  .put(authAdmin, productCtrl.updateProduct)
-  .delete(authAdmin, productCtrl.deleteProduct);
+router.put("/product", authAdmin, productCtrl.updateProduct);
+
+router.delete("/product/:id", authAdmin, productCtrl.deleteProduct);
 
 module.exports = router;

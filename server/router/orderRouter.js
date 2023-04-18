@@ -8,10 +8,7 @@ const router = express.Router();
 
 router.get("/orders", authAdmin, orderCtrl.getOrders);
 
-router
-  .route("/order/:id")
-  .get(auth, orderCtrl.getOrder)
-  .put(auth, orderCtrl.updateOrder);
+router.put("/order", auth, orderCtrl.updateOrder);
 
 router.get("/order", auth, orderCtrl.getUserOrder);
 

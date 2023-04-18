@@ -8,7 +8,7 @@ const brandCtrl = {
         "createdBy",
         "_id username email mobileNumber image"
       );
-      return res.json({brands});
+      return res.json(brands);
     } catch (error) {
       return res.status(500).json({message: error.message});
     }
@@ -36,7 +36,7 @@ const brandCtrl = {
       const products = await Product.findOne({brand: req.params.id});
       if (products)
         return res.status(400).json({
-          message: "Please Delete All Product of this Brand First.",
+          message: "Please delete all product of this brand first.",
         });
       await Brand.findByIdAndDelete(req.params.id);
       return res.json({message: "Brand Deleted."});
@@ -46,14 +46,18 @@ const brandCtrl = {
   },
   updateBrand: async (req, res) => {
     try {
-      const {name, image} = req.body;
-      const cat = {name, image};
-      const brand = await Brand.findByIdAndUpdate(req.params.id, cat, {
-        new: true,
-      });
-      if (!brand)
-        return res.status(400).json({message: "This Brand Does Not Exists."});
-      return res.json({message: "Brand Updated."});
+      const {id, name, image} = req.body;
+      if (!id || !name || !image) {
+        return res.status(400).json({message: "All fields are required."});
+      }
+      const brand = await Brand.findById(id).exec();
+      if (!brand) {
+        return res.status(400).json({message: "Brand not found."});
+      }
+      brand.name = name;
+      brand.image = image;
+      await brand.save();
+      return res.status(200).json({message: "Brand updated successful."});
     } catch (error) {
       return res.status(500).json({message: error.message});
     }

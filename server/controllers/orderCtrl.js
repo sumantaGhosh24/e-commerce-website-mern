@@ -13,30 +13,19 @@ const orderCtrl = {
       return res.status(500).json({message: error.message});
     }
   },
-  getOrder: async (req, res) => {
-    try {
-      const order = await Order.findById(req.params.id)
-        .populate("user", "_id username email mobileNumber image")
-        .populate("orderItems.product");
-      if (!order)
-        return res.status(400).json({message: "This Order doest not Exists."});
-      return res.json(order);
-    } catch (error) {
-      return res.status(500).json({message: error.message});
-    }
-  },
   updateOrder: async (req, res) => {
     try {
-      const {orderStatus, isPaid, isDeliverd} = req.body;
-      let paidAt = Date.now();
-      let deliverAt = Date.now();
-      const order = await Order.findByIdAndUpdate(
-        req.params.id,
-        {orderStatus, isPaid, paidAt, isDeliverd, deliverAt},
-        {new: true}
-      );
-      if (!order)
-        return res.status(400).json({message: "Order doest not Exists."});
+      const {orderStatus, isPaid, isDeliverd, paidAt, deliverAt, id} = req.body;
+      const order = await Order.findById(id).exec();
+      if (!order) {
+        return res.status(400).json({message: "Order not found."});
+      }
+      order.orderStatus = orderStatus;
+      order.isPaid = isPaid;
+      order.isDeliverd = isDeliverd;
+      order.paidAt = paidAt;
+      order.deliverAt = deliverAt;
+      await order.save();
       return res.json({message: "Order updated successful."});
     } catch (error) {
       return res.status(500).json({message: error.message});

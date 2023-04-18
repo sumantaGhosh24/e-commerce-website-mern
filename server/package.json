@@ -25,6 +25,7 @@
     "shortid": "^2.2.16"
   },
   "devDependencies": {
+    "@faker-js/faker": "^7.6.0",
     "nodemon": "^2.0.22"
   }
 }

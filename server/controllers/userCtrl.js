@@ -1,43 +1,47 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-const User = require("../models/userModel");
+const Brand = require("../models/brandModel");
+const Category = require("../models/categoryModel");
+const Order = require("../models/orderModel");
 const Product = require("../models/productModel");
+const Review = require("../models/reviewModel");
+const User = require("../models/userModel");
 
-class APIfeatures {
-  constructor(query, queryString) {
-    this.query = query;
-    this.queryString = queryString;
-  }
-  filtering() {
-    const queryObj = {...this.queryString};
-    const excludedFields = ["page", "sort", "limit"];
-    excludedFields.forEach((el) => delete queryObj[el]);
-    let queryStr = JSON.stringify(queryObj);
-    queryStr = queryStr.replace(
-      /\b(gte|gt|lt|lte|regex)\b/g,
-      (match) => "$" + match
-    );
-    this.query.find(JSON.parse(queryStr));
-    return this;
-  }
-  sorting() {
-    if (this.queryString.sort) {
-      const sortBy = this.queryString.sort.split(",").join(" ");
-      this.query = this.query.sort(sortBy);
-    } else {
-      this.query = this.query.sort("-createdAt");
-    }
-    return this;
-  }
-  paginating() {
-    const page = this.queryString.page * 1 || 1;
-    const limit = this.queryString.limit * 1 || 9;
-    const skip = (page - 1) * limit;
-    this.query = this.query.skip(skip).limit(limit);
-    return this;
-  }
-}
+// class APIfeatures {
+//   constructor(query, queryString) {
+//     this.query = query;
+//     this.queryString = queryString;
+//   }
+//   filtering() {
+//     const queryObj = {...this.queryString};
+//     const excludedFields = ["page", "sort", "limit"];
+//     excludedFields.forEach((el) => delete queryObj[el]);
+//     let queryStr = JSON.stringify(queryObj);
+//     queryStr = queryStr.replace(
+//       /\b(gte|gt|lt|lte|regex)\b/g,
+//       (match) => "$" + match
+//     );
+//     this.query.find(JSON.parse(queryStr));
+//     return this;
+//   }
+//   sorting() {
+//     if (this.queryString.sort) {
+//       const sortBy = this.queryString.sort.split(",").join(" ");
+//       this.query = this.query.sort(sortBy);
+//     } else {
+//       this.query = this.query.sort("-createdAt");
+//     }
+//     return this;
+//   }
+//   paginating() {
+//     const page = this.queryString.page * 1 || 1;
+//     const limit = this.queryString.limit * 1 || 9;
+//     const skip = (page - 1) * limit;
+//     this.query = this.query.skip(skip).limit(limit);
+//     return this;
+//   }
+// }
 
 const userCtrl = {
   register: async (req, res) => {
@@ -131,15 +135,14 @@ const userCtrl = {
     try {
       const {email, password} = req.body;
       if (!email || !password) {
-        return res.status(400).json({message: "All fields are required."});
+        return res.status(400).json({message: "All fields are required"});
       }
       const foundUser = await User.findOne({email}).exec();
       if (!foundUser) {
-        return res.status(401).json({message: "This email not register."});
+        return res.status(401).json({message: "Unauthorized"});
       }
       const match = await bcrypt.compare(password, foundUser.password);
-      if (!match)
-        return res.status(401).json({message: "Email and password not match."});
+      if (!match) return res.status(401).json({message: "Unauthorized"});
       const accessToken = jwt.sign(
         {
           UserInfo: {
@@ -158,6 +161,7 @@ const userCtrl = {
       );
       res.cookie("jwt", refreshToken, {
         httpOnly: true,
+        secure: true,
         sameSite: "None",
         maxAge: 7 * 24 * 60 * 60 * 1000,
       });
@@ -221,12 +225,10 @@ const userCtrl = {
   },
   getUsers: async (req, res) => {
     try {
-      const features = new APIfeatures(User.find(), req.query)
-        .filtering()
-        .sorting()
-        .paginating();
-      const users = await features.query;
-      return res.json({status: "success", result: users.length, users: users});
+      const users = await User.find().select("-password");
+      if (!users)
+        return res.status(400).json({message: "Users does not exists."});
+      return res.json(users);
     } catch (error) {
       return res.status(500).json({message: error.message});
     }
@@ -235,7 +237,7 @@ const userCtrl = {
     const user = await User.findById(req.id)
       .select("-password")
       .populate("cart.product");
-    if (!user) return res.status(400).json({message: "User does not Exists."});
+    if (!user) return res.status(400).json({message: "User does not exists."});
     return res.json({user});
   },
   getCart: async (req, res) => {
@@ -267,6 +269,54 @@ const userCtrl = {
         }
       );
       return res.json({message: "Added to cart."});
+    } catch (error) {
+      return res.status(500).json({message: error.message});
+    }
+  },
+  getDashboard: async (req, res) => {
+    try {
+      const brandCount = await Brand.estimatedDocumentCount();
+      const categoryCount = await Category.estimatedDocumentCount();
+      const orderCount = await Order.estimatedDocumentCount();
+      const productCount = await Product.estimatedDocumentCount();
+      const reviewCount = await Review.estimatedDocumentCount();
+      const userCount = await User.estimatedDocumentCount();
+      const totalPrice = await Order.aggregate([
+        {$group: {_id: null, amount: {$sum: "$totalPrice"}}},
+      ]);
+      const price = await Order.aggregate([
+        {$group: {_id: null, amount: {$sum: "$price"}}},
+      ]);
+      const taxPrice = await Order.aggregate([
+        {$group: {_id: null, amount: {$sum: "$taxPrice"}}},
+      ]);
+      const shippingPrice = await Order.aggregate([
+        {$group: {_id: null, amount: {$sum: "$shippingPrice"}}},
+      ]);
+      const sellProduct = await Product.aggregate([
+        {$group: {_id: null, sell: {$sum: "$sell"}}},
+      ]);
+      const activeUser = await User.find({status: "active"}).count();
+      const inActiveUser = await User.find({status: "inactive"}).count();
+      const totalAdmin = await User.find({role: "admin"}).count();
+      const totalUser = await User.find({role: "user"}).count();
+      return res.json({
+        brandCount,
+        categoryCount,
+        orderCount,
+        productCount,
+        reviewCount,
+        userCount,
+        totalPrice,
+        price,
+        taxPrice,
+        shippingPrice,
+        sellProduct,
+        activeUser,
+        inActiveUser,
+        totalAdmin,
+        totalUser,
+      });
     } catch (error) {
       return res.status(500).json({message: error.message});
     }

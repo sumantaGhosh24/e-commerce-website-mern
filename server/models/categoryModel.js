@@ -12,9 +12,6 @@ const categorySchema = new mongoose.Schema(
       type: Object,
       required: true,
     },
-    parentId: {
-      type: String,
-    },
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
