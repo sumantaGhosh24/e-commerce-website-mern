@@ -64,7 +64,10 @@ const App = () => {
                 path="my-order"
                 element={<RequireUser elm={<MyOrder />} />}
               />
-              <Route path="cart" element={<RequireUser elm={<MyCart />} />} />
+              <Route
+                path="my-cart"
+                element={<RequireUser elm={<MyCart />} />}
+              />
 
               {/* admin routes */}
               <Route

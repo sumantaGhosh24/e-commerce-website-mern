@@ -4,7 +4,7 @@ const Razorpay = require("razorpay");
 const crypto = require("crypto");
 
 const Order = require("../models/orderModel");
-const Product = require("../models/productModel");
+const Cart = require("../models/cartModel");
 
 const instance = new Razorpay({
   key_id: process.env.RAZORPAY_KEY_ID,
@@ -14,29 +14,9 @@ const instance = new Razorpay({
 const paymentCtrl = {
   getRazorpay: async (req, res) => {
     try {
-      const {orderItems} = req.body;
-      let totalPrices = [];
-      let quantitys = [];
-      for (let i = 0; i < orderItems.length; i++) {
-        const price = await Product.findById(orderItems[i].product).select(
-          "price -_id"
-        );
-        quantitys.push(orderItems[i].quantity);
-        totalPrices.push(price.price);
-      }
-      let price = 0;
-      let taxPrice;
-      let shippingPrice;
-      let totalPrice;
-      for (let i = 0; i < totalPrices.length; i++) {
-        let num = Number(totalPrices[i]) * Number(quantitys[i]);
-        price += num;
-        taxPrice = (18 / 100) * price;
-        shippingPrice = (15 / 100) * price;
-        totalPrice = price + taxPrice + shippingPrice;
-      }
+      const {price} = req.body;
       const options = {
-        amount: Number(totalPrice * 100),
+        amount: Number(price * 100),
         currency: "INR",
       };
       const order = await instance.orders.create(options);
@@ -55,28 +35,13 @@ const paymentCtrl = {
         razorpaySignature,
         orderItems,
         shippingAddress,
+        price,
+        taxPrice,
+        shippingPrice,
+        totalPrice,
+        cartId,
       } = req.body;
       const user = req.id;
-      let totalPrices = [];
-      let quantitys = [];
-      for (let i = 0; i < orderItems.length; i++) {
-        const price = await Product.findById(orderItems[i].product).select(
-          "price -_id"
-        );
-        quantitys.push(orderItems[i].quantity);
-        totalPrices.push(price.price);
-      }
-      let price = 0;
-      let taxPrice;
-      let shippingPrice;
-      let totalPrice;
-      for (let i = 0; i < totalPrices.length; i++) {
-        let num = Number(totalPrices[i]) * Number(quantitys[i]);
-        price += num;
-        taxPrice = (18 / 100) * price;
-        shippingPrice = (15 / 100) * price;
-        totalPrice = price + taxPrice + shippingPrice;
-      }
       const shasum = crypto.createHmac(
         "sha256",
         process.env.RAZORPAY_KEY_SECRET
@@ -97,7 +62,7 @@ const paymentCtrl = {
           razorpay_signature: razorpaySignature,
         },
         shippingAddress,
-        orderStatus: "que",
+        orderStatus: "pending",
         price,
         taxPrice,
         shippingPrice,
@@ -106,6 +71,7 @@ const paymentCtrl = {
         paidAt: date_time,
       });
       await newOrder.save();
+      await Cart.findByIdAndDelete(cartId);
       return res.json({
         message: "success",
         orderId: razorpayOrderId,

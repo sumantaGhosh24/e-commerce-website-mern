@@ -7,7 +7,8 @@ export {default as Welcome} from "./users/Welcome";
 export {default as Dashboard} from "./users/Dashboard";
 export {default as AdminManageUser} from "./users/AdminManageUser";
 export {default as Profile} from "./users/Profile";
-export {default as MyCart} from "./users/MyCart";
+
+export {default as MyCart} from "./cart/MyCart";
 
 export {default as AdminManageReview} from "./review/AdminManageReview";
 export {default as MyReviews} from "./review/MyReviews";

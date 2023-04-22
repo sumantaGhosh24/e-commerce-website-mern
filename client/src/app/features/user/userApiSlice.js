@@ -46,27 +46,12 @@ export const userApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: (result, error, arg) => [{type: "User", id: arg.id}],
     }),
-    getCart: builder.query({
-      query: () => "/getcart",
-      transformResponse: (response) => response,
-      providesTags: (result, error, id) => [{type: "Cart", id: "LIST"}],
-    }),
-    addCart: builder.mutation({
-      query: (data) => ({
-        url: "/addcart",
-        method: "PATCH",
-        body: {data},
-      }),
-      invalidatesTags: (result, error, {id}) => [{type: "Cart", id: "LIST"}],
-    }),
   }),
 });
 
 export const {
-  useAddCartMutation,
   useDeleteUserMutation,
   useGetAllUserQuery,
-  useGetCartQuery,
   useGetUserQuery,
   useGetDashboardQuery,
 } = userApiSlice;

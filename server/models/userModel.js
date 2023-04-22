@@ -66,15 +66,6 @@ const userSchema = new mongoose.Schema(
       trim: true,
     },
 
-    cart: {
-      type: Array,
-      product: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        ref: "Product",
-      },
-      quantity: {type: Number},
-    },
     status: {
       type: String,
       default: "active",

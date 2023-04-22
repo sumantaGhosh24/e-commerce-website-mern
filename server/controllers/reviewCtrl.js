@@ -30,7 +30,9 @@ const reviewCtrl = {
   },
   getMyReviews: async (req, res) => {
     try {
-      const reviews = await Review.find({user: req.id}).populate("product");
+      const reviews = await Review.find({user: req.id})
+        .populate("user", "username email image")
+        .populate("product", "title image");
       if (!reviews) {
         return res.status(400).json({message: "No Review Exists."});
       }

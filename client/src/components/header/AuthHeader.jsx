@@ -54,7 +54,7 @@ const AuthHeader = () => {
     navLinks = (
       <>
         <li className="text-white hover:text-blue-200">
-          <Link to="/welcome">Welcome</Link>
+          <Link to="/welcome">Products</Link>
         </li>
         <li className="text-white hover:text-blue-200">
           <Link to="/profile">Profile</Link>

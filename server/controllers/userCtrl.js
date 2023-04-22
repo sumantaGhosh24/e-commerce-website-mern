@@ -234,44 +234,9 @@ const userCtrl = {
     }
   },
   getUser: async (req, res) => {
-    const user = await User.findById(req.id)
-      .select("-password")
-      .populate("cart.product");
+    const user = await User.findById(req.id).select("-password");
     if (!user) return res.status(400).json({message: "User does not exists."});
-    return res.json({user});
-  },
-  getCart: async (req, res) => {
-    try {
-      const user = await User.findById(req.id).select("cart");
-      if (!user)
-        return res.status(400).json({message: "User does not Exists."});
-      const userCart = [];
-      for (const ca of user.cart) {
-        const product = await Product.findById(ca.product).select(
-          "_id title image description content category brand price stock"
-        );
-        userCart.push({product, quantity: ca.quantity});
-      }
-      return res.json(userCart);
-    } catch (error) {
-      return res.status(500).json({message: error.message});
-    }
-  },
-  addCart: async (req, res) => {
-    try {
-      const user = await User.findById(req.id);
-      if (!user)
-        return res.status(400).json({message: "User doest not Exists."});
-      await User.findOneAndUpdate(
-        {_id: req.id},
-        {
-          cart: req.body.cart,
-        }
-      );
-      return res.json({message: "Added to cart."});
-    } catch (error) {
-      return res.status(500).json({message: error.message});
-    }
+    return res.json(user);
   },
   getDashboard: async (req, res) => {
     try {

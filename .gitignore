@@ -1,5 +1,6 @@
 .env
 seed.js
+config.js
 
 # Logs
 logs

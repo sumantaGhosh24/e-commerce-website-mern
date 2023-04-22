@@ -33,6 +33,7 @@ app.use("/api", require("./router/productRouter"));
 app.use("/api", require("./router/reviewRouter"));
 app.use("/api", require("./router/paymentRouter"));
 app.use("/api", require("./router/orderRouter"));
+app.use("/api", require("./router/cartRouter"));
 
 mongoose.connection.once("open", () => {
   console.log("database connection successful.");

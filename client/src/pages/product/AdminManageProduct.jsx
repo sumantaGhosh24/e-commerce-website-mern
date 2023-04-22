@@ -1,4 +1,3 @@
-import {memo} from "react";
 import {FaEye, FaPlus} from "react-icons/fa";
 import {Link} from "react-router-dom";
 import CircleLoader from "react-spinners/CircleLoader";

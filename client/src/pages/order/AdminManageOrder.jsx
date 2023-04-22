@@ -1,5 +1,5 @@
 import {memo} from "react";
-import {FaEye, FaJediOrder} from "react-icons/fa";
+import {FaEye} from "react-icons/fa";
 import {Link} from "react-router-dom";
 import CircleLoader from "react-spinners/CircleLoader";
 
@@ -163,7 +163,7 @@ const Order = ({orderId, ind}) => {
           <div className="flex">
             {order?.orderItems?.map((item, i) => (
               <div
-                className="max-2-sm p-6 bg-white border border-gray-200 rounded-lg shadow mx-3"
+                className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow mx-3"
                 key={i}
               >
                 <img
