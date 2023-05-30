@@ -60,19 +60,3 @@ export const {
   useGetCategoriesQuery,
   useUpdateCategoryMutation,
 } = categoryApiSlice;
-
-// export const selectCategoryResult =
-//   categoryApiSlice.endpoints.getCategories.select();
-
-// const selectCategoryData = createSelector(
-//   selectCategoryResult,
-//   (categoryResult) => categoryResult.data
-// );
-
-// export const {
-//   selectAll: selectAllCategory,
-//   selectById: selectCategoryById,
-//   selectIds: selectCategoryIds,
-// } = categoryAdapter.getSelectors(
-//   (state) => selectCategoryData(state) ?? initialState
-// );

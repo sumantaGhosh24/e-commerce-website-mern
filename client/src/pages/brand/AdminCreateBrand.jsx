@@ -1,11 +1,12 @@
 import {useEffect, useState} from "react";
 import {BiImageAdd} from "react-icons/bi";
 import {useNavigate} from "react-router-dom";
-import CircleLoader from "react-spinners/CircleLoader";
 import {toast} from "react-toastify";
 
 import {useCreateBrandMutation} from "../../app/features/brand/brandApiSlice";
+import {Loading} from "../../components";
 import {useTitle} from "../../hooks";
+import {convertToBase64} from "../../lib";
 
 const AdminCreateBrand = () => {
   useTitle("Create Brand");
@@ -53,18 +54,7 @@ const AdminCreateBrand = () => {
   };
 
   if (isLoading) {
-    return (
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          height: "100vh",
-        }}
-      >
-        <CircleLoader color="#0D6EFD" size={480} />
-      </div>
-    );
+    return <Loading />;
   }
 
   return (
@@ -165,16 +155,3 @@ const AdminCreateBrand = () => {
 };
 
 export default AdminCreateBrand;
-
-function convertToBase64(file) {
-  return new Promise((resolve, reject) => {
-    const fileReader = new FileReader();
-    fileReader.readAsDataURL(file);
-    fileReader.onload = () => {
-      resolve(fileReader.result);
-    };
-    fileReader.onerror = (error) => {
-      reject(error);
-    };
-  });
-}

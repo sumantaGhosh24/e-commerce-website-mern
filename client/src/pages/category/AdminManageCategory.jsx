@@ -1,9 +1,8 @@
-import {memo} from "react";
-import {FaEye, FaPlus} from "react-icons/fa";
+import {FaPlus} from "react-icons/fa";
 import {Link} from "react-router-dom";
-import CircleLoader from "react-spinners/CircleLoader";
 
 import {useGetCategoriesQuery} from "../../app/features/category/categoryApiSlice";
+import {Loading, ManageCategory} from "../../components";
 import {useTitle} from "../../hooks";
 
 const AdminManageCategory = () => {
@@ -22,18 +21,7 @@ const AdminManageCategory = () => {
   });
 
   if (isLoading) {
-    return (
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          height: "100vh",
-        }}
-      >
-        <CircleLoader color="#0D6EFD" size={480} />
-      </div>
-    );
+    return <Loading />;
   }
 
   let content;
@@ -48,7 +36,9 @@ const AdminManageCategory = () => {
     const {ids} = category;
     const tableContent =
       ids?.length &&
-      ids.map((catId, i) => <Category key={catId} catId={catId} ind={i + 1} />);
+      ids.map((catId, i) => (
+        <ManageCategory key={catId} catId={catId} ind={i + 1} />
+      ));
 
     content = (
       <div className="relative overflow-x-auto mt-10">
@@ -96,39 +86,5 @@ const AdminManageCategory = () => {
     </>
   );
 };
-
-const Category = ({catId, ind}) => {
-  const {category} = useGetCategoriesQuery("categoryList", {
-    selectFromResult: ({data}) => ({category: data?.entities[catId]}),
-  });
-
-  if (category) {
-    return (
-      <tr className="bg-white border-b text-base font-bold">
-        <th scope="row" className="px-6 py-4">
-          {ind}
-        </th>
-        <td className="px-6 py-4">{category.id}</td>
-        <td className="px-6 py-4">{category.name}</td>
-        <td className="px-6 py-4">
-          <img
-            src={category.image}
-            alt={category.name}
-            className="rounded-full h-24 w-24"
-          />
-        </td>
-        <td className="px-6 py-4">{category.createdAt}</td>
-        <td className="px-6 py-4">{category.updatedAt}</td>
-        <td className="px-6 py-4">
-          <Link className="btn-icon" to={`/admin-category/${category.id}`}>
-            <FaEye className="mr-2 h-10 w-10" /> Manage Category
-          </Link>
-        </td>
-      </tr>
-    );
-  } else return null;
-};
-
-const memorizedCategory = memo(Category);
 
 export default AdminManageCategory;

@@ -1,6 +1,5 @@
-import CircleLoader from "react-spinners/CircleLoader";
-
 import {useGetUserQuery} from "../../app/features/user/userApiSlice";
+import {Loading} from "../../components";
 import {useTitle} from "../../hooks";
 
 const Profile = () => {
@@ -19,18 +18,7 @@ const Profile = () => {
   });
 
   if (isLoading) {
-    return (
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          height: "100vh",
-        }}
-      >
-        <CircleLoader color="#0D6EFD" size={480} />
-      </div>
-    );
+    return <Loading />;
   }
 
   let content;

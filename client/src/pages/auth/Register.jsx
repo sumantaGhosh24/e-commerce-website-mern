@@ -1,12 +1,12 @@
 import {useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
-import CircleLoader from "react-spinners/CircleLoader";
 import {toast} from "react-toastify";
 import {BiImageAdd} from "react-icons/bi";
 
 import {useTitle} from "../../hooks";
 import {useRegisterMutation} from "../../app/features/auth/authApiSlice";
-import {PublicHeader} from "../../components";
+import {Loading, PublicHeader} from "../../components";
+import {convertToBase64} from "../../lib";
 
 const Register = () => {
   useTitle("Register");
@@ -70,9 +70,7 @@ const Register = () => {
         addressline2: "",
       });
       toast.success(message, {autoClose: 2000, delay: 300});
-      setInterval(() => {
-        navigate("/login");
-      }, 2000);
+      navigate("/login");
     } catch (error) {
       if (error.status === "FETCH_ERROR") {
         toast.error("server error", {autoClose: 7000, delay: 300});
@@ -87,18 +85,7 @@ const Register = () => {
   };
 
   if (isLoading) {
-    return (
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          height: "100vh",
-        }}
-      >
-        <CircleLoader color="#0D6EFD" size={480} />
-      </div>
-    );
+    return <Loading />;
   }
 
   return (
@@ -566,16 +553,3 @@ const Register = () => {
 };
 
 export default Register;
-
-function convertToBase64(file) {
-  return new Promise((resolve, reject) => {
-    const fileReader = new FileReader();
-    fileReader.readAsDataURL(file);
-    fileReader.onload = () => {
-      resolve(fileReader.result);
-    };
-    fileReader.onerror = (error) => {
-      reject(error);
-    };
-  });
-}

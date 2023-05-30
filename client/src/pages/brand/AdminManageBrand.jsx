@@ -1,9 +1,8 @@
-import {memo} from "react";
-import {FaEye, FaPlus} from "react-icons/fa";
+import {FaPlus} from "react-icons/fa";
 import {Link} from "react-router-dom";
-import CircleLoader from "react-spinners/CircleLoader";
 
 import {useGetBrandsQuery} from "../../app/features/brand/brandApiSlice";
+import {Loading, ManageBrand} from "../../components";
 import {useTitle} from "../../hooks";
 
 const AdminManageBrand = () => {
@@ -22,18 +21,7 @@ const AdminManageBrand = () => {
   });
 
   if (isLoading) {
-    return (
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          height: "100vh",
-        }}
-      >
-        <CircleLoader color="#0D6EFD" size={480} />
-      </div>
-    );
+    return <Loading />;
   }
 
   let content;
@@ -49,7 +37,7 @@ const AdminManageBrand = () => {
     const tableContent =
       ids?.length &&
       ids.map((brandId, i) => (
-        <Brand key={brandId} brandId={brandId} ind={i + 1} />
+        <ManageBrand key={brandId} brandId={brandId} ind={i + 1} />
       ));
 
     content = (
@@ -98,39 +86,5 @@ const AdminManageBrand = () => {
     </>
   );
 };
-
-const Brand = ({brandId, ind}) => {
-  const {brand} = useGetBrandsQuery("brandList", {
-    selectFromResult: ({data}) => ({brand: data?.entities[brandId]}),
-  });
-
-  if (brand) {
-    return (
-      <tr className="bg-white border-b text-base font-bold">
-        <th scope="row" className="px-6 py-4">
-          {ind}
-        </th>
-        <td className="px-6 py-4">{brand.id}</td>
-        <td className="px-6 py-4">{brand.name}</td>
-        <td className="px-6 py-4">
-          <img
-            src={brand.image}
-            alt={brand.name}
-            className="rounded-full h-24 w-24"
-          />
-        </td>
-        <td className="px-6 py-4">{brand.createdAt}</td>
-        <td className="px-6 py-4">{brand.updatedAt}</td>
-        <td className="px-6 py-4">
-          <Link className="btn-icon" to={`/admin-brand/${brand.id}`}>
-            <FaEye className="mr-2 h-10 w-10" /> Manage Brand
-          </Link>
-        </td>
-      </tr>
-    );
-  } else return null;
-};
-
-const memorizedBrand = memo(Brand);
 
 export default AdminManageBrand;

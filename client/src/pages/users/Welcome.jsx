@@ -1,12 +1,17 @@
-import {FaEye} from "react-icons/fa";
-import {Link} from "react-router-dom";
-import CircleLoader from "react-spinners/CircleLoader";
+import {useState} from "react";
 
-import {useGetProductsQuery} from "../../app/features/product/productApiSlice";
 import {useTitle} from "../../hooks";
+import {useGetPaginationProductQuery} from "../../app/features/product/productApiSlice";
+import {Loading, Product} from "../../components";
+import {useGetCategoriesQuery} from "../../app/features/category/categoryApiSlice";
 
 const Welcome = () => {
   useTitle("Welcome");
+
+  const [sCategory, setSCategory] = useState("");
+  const [sSort, setSSort] = useState("");
+  const [sSearch, setSSearch] = useState("");
+  const [sPage, setSPage] = useState(1);
 
   const {
     data: product,
@@ -14,26 +19,31 @@ const Welcome = () => {
     isSuccess,
     isError,
     error,
-  } = useGetProductsQuery("productList", {
-    pollingInterval: 15000,
-    refetchOnFocus: true,
-    refetchOnMountOrArgChange: true,
+  } = useGetPaginationProductQuery({
+    category: sCategory,
+    sort: sSort,
+    search: sSearch,
+    page: sPage,
   });
 
-  if (isLoading) {
-    return (
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          height: "100vh",
-        }}
-      >
-        <CircleLoader color="#0D6EFD" size={480} />
-      </div>
-    );
+  const {category} = useGetCategoriesQuery("categoryList", {
+    selectFromResult: ({data}) => ({
+      category: data?.ids.map((id) => data?.entities[id]),
+    }),
+  });
+
+  if (!category?.length) {
+    return <Loading />;
   }
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  const handleCategory = (e) => {
+    setSCategory(e.target.value);
+    setSSearch("");
+  };
 
   let content;
 
@@ -59,44 +69,63 @@ const Welcome = () => {
     );
   }
 
-  return <>{content}</>;
-};
-
-const Product = ({productId}) => {
-  const {product} = useGetProductsQuery("productList", {
-    selectFromResult: ({data}) => ({product: data?.entities[productId]}),
-  });
-
-  if (product) {
-    return (
-      <div className="bg-white border border-gray-200 rounded-lg shadow">
-        <Link to={`/product/${product._id}`}>
-          <img
-            className="rounded-t-lg"
-            src={product.image[0]}
-            alt={product.title}
-          />
-        </Link>
-        <div className="p-3">
-          <Link to={`/product/${product._id}`}>
-            <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">
-              {getWordStr(product.title, 7)}
-            </h5>
-          </Link>
-          <p className="mb-2 font-normal text-gray-700">
-            {getWordStr(product.description, 12)}
-          </p>
-          <Link className="btn-icon" to={`/product/${product.id}`}>
-            <FaEye className="mr-2 h-5 w-5" /> Details
-          </Link>
+  return (
+    <>
+      <section className="max-w-7xl p-6 mx-auto my-20 shadow-xl rounded-xl bg-blue-500">
+        <h2 className="text-3xl font-bold capitalize mb-10 text-white">
+          Search Product
+        </h2>
+        <div className="flex items-center justify-between flex-wrap">
+          <div className="flex-1 w-1/4 mt-5 mx-5">
+            <span className="text-white mr-3 text-xl">Filters: </span>
+            <select
+              name="category"
+              value={category}
+              onChange={handleCategory}
+              className="p-2 w-full"
+            >
+              <option value="">All Products</option>
+              {category.map((category) => (
+                <option value={"category=" + category._id} key={category._id}>
+                  {category.name}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="flex-1 w-1/4 md:w-2/5 lg:w-4/5 mt-5 mx-5">
+            <span className="text-white mr-3 text-xl">Search: </span>
+            <input
+              type="text"
+              value={sSearch}
+              placeholder="Enter your search!"
+              onChange={(e) => setSSearch(e.target.value.toLowerCase())}
+              className="p-2 w-full"
+            />
+          </div>
+          <div className="flex-1 w-1/4 md:w-2/5 lg:w-4/5 mt-5 mx-5">
+            <span className="text-white mr-3 text-xl">Sort By: </span>
+            <select
+              value={sSort}
+              onChange={(e) => setSSort(e.target.value)}
+              className="p-2 w-full"
+            >
+              <option value="">Newest</option>
+              <option value="sort=oldest">Oldest</option>
+              <option value="sort=-sold">Best sales</option>
+              <option value="sort=-price">Price: Hight-Low</option>
+              <option value="sort=price">Price: Low-Hight</option>
+            </select>
+          </div>
         </div>
+      </section>
+      {content}
+      <div className="my-5 flex align-center justify-center">
+        <button className="btn btn-red" onClick={() => setSPage(sPage + 1)}>
+          Load More
+        </button>
       </div>
-    );
-  } else return null;
+    </>
+  );
 };
-
-function getWordStr(str, len = 10) {
-  return str.split(/\s+/).slice(0, len).join(" ");
-}
 
 export default Welcome;

@@ -8,41 +8,6 @@ const Product = require("../models/productModel");
 const Review = require("../models/reviewModel");
 const User = require("../models/userModel");
 
-// class APIfeatures {
-//   constructor(query, queryString) {
-//     this.query = query;
-//     this.queryString = queryString;
-//   }
-//   filtering() {
-//     const queryObj = {...this.queryString};
-//     const excludedFields = ["page", "sort", "limit"];
-//     excludedFields.forEach((el) => delete queryObj[el]);
-//     let queryStr = JSON.stringify(queryObj);
-//     queryStr = queryStr.replace(
-//       /\b(gte|gt|lt|lte|regex)\b/g,
-//       (match) => "$" + match
-//     );
-//     this.query.find(JSON.parse(queryStr));
-//     return this;
-//   }
-//   sorting() {
-//     if (this.queryString.sort) {
-//       const sortBy = this.queryString.sort.split(",").join(" ");
-//       this.query = this.query.sort(sortBy);
-//     } else {
-//       this.query = this.query.sort("-createdAt");
-//     }
-//     return this;
-//   }
-//   paginating() {
-//     const page = this.queryString.page * 1 || 1;
-//     const limit = this.queryString.limit * 1 || 9;
-//     const skip = (page - 1) * limit;
-//     this.query = this.query.skip(skip).limit(limit);
-//     return this;
-//   }
-// }
-
 const userCtrl = {
   register: async (req, res) => {
     try {
@@ -162,7 +127,6 @@ const userCtrl = {
       res.cookie("jwt", refreshToken, {
         httpOnly: true,
         secure: true,
-        sameSite: "None",
         maxAge: 7 * 24 * 60 * 60 * 1000,
       });
       res.json({accessToken});
@@ -207,7 +171,7 @@ const userCtrl = {
     try {
       const cookies = req.cookies;
       if (!cookies?.jwt) return res.sendStatus(204);
-      res.clearCookie("jwt", {httpOnly: true, sameSite: "None"});
+      res.clearCookie("jwt", {httpOnly: true});
       res.json({message: "Cookie cleared"});
     } catch (error) {
       return res.status(500).json({message: error.message});

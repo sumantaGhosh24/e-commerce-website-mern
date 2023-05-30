@@ -3,11 +3,11 @@ import {useState, useEffect} from "react";
 import {FaBars, FaTimes} from "react-icons/fa";
 import {useSelector} from "react-redux";
 import {Link, useNavigate} from "react-router-dom";
-import CircleLoader from "react-spinners/CircleLoader";
 import {toast} from "react-toastify";
 
 import {useSendLogoutMutation} from "../../app/features/auth/authApiSlice";
 import {selectCurrentToken} from "../../app/features/auth/authSlice";
+import {Loading} from "../";
 
 const AuthHeader = () => {
   const [navbar, setNavbar] = useState(false);
@@ -77,18 +77,7 @@ const AuthHeader = () => {
   }, [isLoading, navigate]);
 
   if (isLoading) {
-    return (
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          height: "100vh",
-        }}
-      >
-        <CircleLoader color="#0D6EFD" size={480} />
-      </div>
-    );
+    return <Loading />;
   }
 
   if (isError) {

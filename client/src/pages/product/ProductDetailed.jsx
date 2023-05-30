@@ -1,11 +1,11 @@
 import {useState} from "react";
 import {FaCartPlus} from "react-icons/fa";
 import {useParams} from "react-router-dom";
-import CircleLoader from "react-spinners/CircleLoader";
 import {toast} from "react-toastify";
 
 import {useAddCartMutation} from "../../app/features/cart/cartApiSlice";
 import {useGetProductsQuery} from "../../app/features/product/productApiSlice";
+import {CreateReview, Loading, ProductReviews} from "../../components";
 import {useTitle} from "../../hooks";
 
 const ProductDetailed = () => {
@@ -25,18 +25,7 @@ const ProductDetailed = () => {
   });
 
   if (!product) {
-    return (
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          height: "100vh",
-        }}
-      >
-        <CircleLoader color="#0D6EFD" size={480} />
-      </div>
-    );
+    return <Loading />;
   }
 
   const [addCart, {isLoading}] = useAddCartMutation();
@@ -60,18 +49,7 @@ const ProductDetailed = () => {
   };
 
   if (isLoading) {
-    return (
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          height: "100vh",
-        }}
-      >
-        <CircleLoader color="#0D6EFD" size={480} />
-      </div>
-    );
+    return <Loading />;
   }
 
   return (
@@ -153,6 +131,8 @@ const ProductDetailed = () => {
           <FaCartPlus className="btn-icons" /> Add to Cart
         </button>
       </section>
+      <CreateReview id={product.id} />
+      <ProductReviews id={product.id} />
     </>
   );
 };

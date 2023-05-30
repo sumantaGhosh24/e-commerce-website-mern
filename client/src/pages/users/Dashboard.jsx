@@ -1,11 +1,10 @@
 import {useState} from "react";
-import CircleLoader from "react-spinners/CircleLoader";
 import Chart from "chart.js/auto";
 import {CategoryScale} from "chart.js";
-import {Bar} from "react-chartjs-2";
 
 import {useGetDashboardQuery} from "../../app/features/user/userApiSlice";
 import {useTitle} from "../../hooks";
+import {BarChart, Loading} from "../../components";
 
 Chart.register(CategoryScale);
 
@@ -91,18 +90,7 @@ const Dashboard = () => {
   });
 
   if (isLoading) {
-    return (
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          height: "100vh",
-        }}
-      >
-        <CircleLoader color="#0D6EFD" size={480} />
-      </div>
-    );
+    return <Loading />;
   }
 
   return (
@@ -122,27 +110,6 @@ const Dashboard = () => {
         </div>
       </section>
     </>
-  );
-};
-
-const BarChart = ({chartData, text}) => {
-  return (
-    <div className="rounded-xl shadow-xl bg-gray-200 p-3 m-2">
-      <Bar
-        data={chartData}
-        options={{
-          plugins: {
-            title: {
-              display: true,
-              text: text,
-            },
-            legend: {
-              display: true,
-            },
-          },
-        }}
-      />
-    </div>
   );
 };
 

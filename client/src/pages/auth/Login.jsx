@@ -1,13 +1,12 @@
 import {useState} from "react";
 import {useDispatch} from "react-redux";
 import {Link, useNavigate} from "react-router-dom";
-import CircleLoader from "react-spinners/CircleLoader";
 import {toast} from "react-toastify";
 
 import {useTitle, usePersist} from "../../hooks";
 import {useLoginMutation} from "../../app/features/auth/authApiSlice";
 import {setCredentials} from "../../app/features/auth/authSlice";
-import {PublicHeader} from "../../components";
+import {Loading, PublicHeader} from "../../components";
 
 const Login = () => {
   useTitle("Login");
@@ -69,18 +68,7 @@ const Login = () => {
   };
 
   if (isLoading) {
-    return (
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          height: "100vh",
-        }}
-      >
-        <CircleLoader color="#0D6EFD" size={480} />
-      </div>
-    );
+    return <Loading />;
   }
 
   return (

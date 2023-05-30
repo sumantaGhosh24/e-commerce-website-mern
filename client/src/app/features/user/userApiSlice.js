@@ -2,11 +2,6 @@ import {createEntityAdapter} from "@reduxjs/toolkit";
 
 import {apiSlice} from "../../api/apiSlice";
 
-// query: (id) => ({ url: `post/${id}` }),
-// transformResponse: (response, meta, arg) => response.data,
-// transformErrorResponse: (response, meta, arg) => response.status,
-// providesTags: (result, error, id) => [{ type: 'Post', id }],
-
 const userAdapter = createEntityAdapter();
 
 const initialState = userAdapter.getInitialState();

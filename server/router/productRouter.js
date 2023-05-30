@@ -5,6 +5,8 @@ const authAdmin = require("../middleware/authAdmin");
 
 const router = express.Router();
 
+router.get("/p-products", productCtrl.getPaginationProducts);
+
 router.get("/products", productCtrl.getProducts);
 
 router.post("/product", authAdmin, productCtrl.createProduct);

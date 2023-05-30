@@ -6,10 +6,29 @@ const productAdapter = createEntityAdapter();
 
 const initialState = productAdapter.getInitialState();
 
-// /api/products?limit=${page*9}&${category}&${sort}&title[regex]=${search}
-
 export const productApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
+    getPaginationProduct: builder.query({
+      query: ({page, sort, category, search}) =>
+        `/p-products?limit=${
+          page * 9
+        }&${category}&${sort}&title[regex]=${search}`,
+      transformResponse: (responseData) => {
+        const loadedProduct = responseData.map((product) => {
+          product.id = product._id;
+          return product;
+        });
+        return productAdapter.setAll(initialState, loadedProduct);
+      },
+      providesTags: (result, error, arg) => {
+        if (result?.ids) {
+          return [
+            {type: "Product", id: "LIST"},
+            ...result.ids.map((id) => ({type: "Product", id})),
+          ];
+        } else return [{type: "Product", id: "LIST"}];
+      },
+    }),
     getProducts: builder.query({
       query: () => `/products`,
       transformResponse: (responseData) => {
@@ -61,4 +80,5 @@ export const {
   useDeleteProductMutation,
   useGetProductsQuery,
   useUpdateProductMutation,
+  useGetPaginationProductQuery,
 } = productApiSlice;

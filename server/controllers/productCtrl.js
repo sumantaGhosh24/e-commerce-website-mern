@@ -1,61 +1,62 @@
 const Product = require("../models/productModel");
 const Review = require("../models/reviewModel");
 
-// class APIfeatures {
-//   constructor(query, queryString) {
-//     this.query = query;
-//     this.queryString = queryString;
-//   }
-//   filtering() {
-//     const queryObj = {...this.queryString};
-//     const excludedFields = ["page", "sort", "limit"];
-//     excludedFields.forEach((el) => delete queryObj[el]);
-//     let queryStr = JSON.stringify(queryObj);
-//     queryStr = queryStr.replace(
-//       /\b(gte|gt|lt|lte|regex)\b/g,
-//       (match) => "$" + match
-//     );
-//     this.query.find(JSON.parse(queryStr));
-//     return this;
-//   }
-//   sorting() {
-//     if (this.queryString.sort) {
-//       const sortBy = this.queryString.sort.split(",").join(" ");
-//       this.query = this.query.sort(sortBy);
-//     } else {
-//       this.query = this.query.sort("-createdAt");
-//     }
-//     return this;
-//   }
-//   paginating() {
-//     const page = this.queryString.page * 1 || 1;
-//     const limit = this.queryString.limit * 1 || 9;
-//     const skip = (page - 1) * limit;
-//     this.query = this.query.skip(skip).limit(limit);
-//     return this;
-//   }
-// }
+class APIfeatures {
+  constructor(query, queryString) {
+    this.query = query;
+    this.queryString = queryString;
+  }
+  filtering() {
+    const queryObj = {...this.queryString};
+    const excludedFields = ["page", "sort", "limit"];
+    excludedFields.forEach((el) => delete queryObj[el]);
+    let queryStr = JSON.stringify(queryObj);
+    queryStr = queryStr.replace(
+      /\b(gte|gt|lt|lte|regex)\b/g,
+      (match) => "$" + match
+    );
+    this.query.find(JSON.parse(queryStr));
+    return this;
+  }
+  sorting() {
+    if (this.queryString.sort) {
+      const sortBy = this.queryString.sort.split(",").join(" ");
+      this.query = this.query.sort(sortBy);
+    } else {
+      this.query = this.query.sort("-createdAt");
+    }
+    return this;
+  }
+  paginating() {
+    const page = this.queryString.page * 1 || 1;
+    const limit = this.queryString.limit * 1 || 9;
+    const skip = (page - 1) * limit;
+    this.query = this.query.skip(skip).limit(limit);
+    return this;
+  }
+}
 
 const productCtrl = {
+  getPaginationProducts: async (req, res) => {
+    try {
+      const features = new APIfeatures(
+        Product.find()
+          .populate("user", "_id username email mobileNumber image")
+          .populate("category")
+          .populate("brand"),
+        req.query
+      )
+        .filtering()
+        .sorting()
+        .paginating();
+      const products = await features.query;
+      return res.json(products);
+    } catch (error) {
+      return res.status(500).json({message: error.message});
+    }
+  },
   getProducts: async (req, res) => {
     try {
-      // const features = new APIfeatures(
-      //   Product.find()
-      //     .populate("user", "_id username email mobileNumber image")
-      //     .populate("category")
-      //     .populate("brand"),
-      //   req.query
-      // )
-      //   .filtering()
-      //   .sorting()
-      //   .paginating();
-      // const products = await features.query;
-      // return res.json({
-      //   status: "success",
-      //   result: products.length,
-      //   products: products,
-      // });
-
       const products = await Product.find()
         .populate("user", "_id username email mobileNumber image")
         .populate("category")
