@@ -1,11 +1,12 @@
 import {useState} from "react";
+import propTypes from "prop-types";
 
 import {
   useGetRazorpayMutation,
   useVerificationMutation,
 } from "../../app/features/payment/paymentApiSlice";
 import {RAZORPAY_KEY} from "../../config";
-import {getSum} from "../../lib";
+import {formatFloatingNumber, getSum} from "../../lib";
 
 const Checkout = ({cart}) => {
   const [shippingAddress, setShippingAddress] = useState({
@@ -37,10 +38,10 @@ const Checkout = ({cart}) => {
       shippingPrices.push(cart.product[i].shippingPrice);
       totalPrices.push(cart.product[i].totalPrice);
     }
-    let price = prices.reduce(getSum, 0);
-    let taxPrice = taxPrices.reduce(getSum, 0);
-    let shippingPrice = shippingPrices.reduce(getSum, 0);
-    let totalPrice = totalPrices.reduce(getSum, 0);
+    let price = formatFloatingNumber(prices.reduce(getSum, 0));
+    let taxPrice = formatFloatingNumber(taxPrices.reduce(getSum, 0));
+    let shippingPrice = formatFloatingNumber(shippingPrices.reduce(getSum, 0));
+    let totalPrice = formatFloatingNumber(totalPrices.reduce(getSum, 0));
     const result = await getRazorpay({price: totalPrice}).unwrap();
     if (!result) {
       alert("something went wrong please try again later.");
@@ -167,6 +168,10 @@ const Checkout = ({cart}) => {
       </form>
     </section>
   );
+};
+
+Checkout.propTypes = {
+  cart: propTypes.object,
 };
 
 export default Checkout;

@@ -1,5 +1,6 @@
 import {FaEye} from "react-icons/fa";
 import {Link} from "react-router-dom";
+import propTypes from "prop-types";
 
 import {useGetProductsQuery} from "../../app/features/product/productApiSlice";
 import {getWordStr} from "../../lib";
@@ -35,6 +36,10 @@ const Product = ({productId}) => {
       </div>
     );
   } else return null;
+};
+
+Product.propTypes = {
+  productId: propTypes.string,
 };
 
 export default Product;

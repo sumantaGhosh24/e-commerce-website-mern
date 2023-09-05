@@ -18,3 +18,9 @@ export function getWordStr(str, len = 10) {
 export function getSum(total, num) {
   return total + Math.ceil(num);
 }
+
+export function formatFloatingNumber(number) {
+  const roundedNumber = Math.round(number * 100) / 100;
+  const formattedNumber = roundedNumber.toFixed(2);
+  return formattedNumber;
+}

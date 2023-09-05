@@ -47,9 +47,9 @@ const AdminCreateBrand = () => {
     e.preventDefault();
     try {
       const {message} = await createBrand(catData).unwrap();
-      toast.success(message);
+      toast.success(message, {toastId: "brand-success"});
     } catch (error) {
-      toast.error(error?.data?.message);
+      toast.error(error?.data?.message, {toastId: "brand-error"});
     }
   };
 

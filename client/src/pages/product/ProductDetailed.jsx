@@ -13,6 +13,7 @@ const ProductDetailed = () => {
 
   const {id} = useParams();
 
+  // eslint-disable-next-line no-unused-vars
   const [cart, setCart] = useState({
     productId: id,
     quantity: 1,
@@ -24,31 +25,27 @@ const ProductDetailed = () => {
     }),
   });
 
-  if (!product) {
-    return <Loading />;
-  }
-
   const [addCart, {isLoading}] = useAddCartMutation();
 
   const handleCart = async (e) => {
     e.preventDefault();
     try {
       const {message} = await addCart(cart).unwrap();
-      toast.success(message);
+      toast.success(message, {toastId: "product-success"});
     } catch (error) {
       if (error.status === "FETCH_ERROR") {
-        toast.error("server error");
+        toast.error("server error", {toastId: "product-error"});
       } else {
         if (typeof error.data.message === "object") {
-          toast.error(error?.data?.message[0]);
+          toast.error(error?.data?.message[0], {toastId: "product-error"});
         } else {
-          toast.error(error?.data?.message);
+          toast.error(error?.data?.message, {toastId: "product-error"});
         }
       }
     }
   };
 
-  if (isLoading) {
+  if (isLoading || !product) {
     return <Loading />;
   }
 

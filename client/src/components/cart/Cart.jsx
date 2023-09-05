@@ -1,11 +1,12 @@
 import {FaMinusCircle, FaPlusCircle, FaTimesCircle} from "react-icons/fa";
 import {toast} from "react-toastify";
+import propTypes from "prop-types";
 
 import {
   useAddCartMutation,
   useRemoveCartMutation,
 } from "../../app/features/cart/cartApiSlice";
-import {getWordStr} from "../../lib";
+import {formatFloatingNumber, getWordStr} from "../../lib";
 import {Loading} from "../";
 
 const Cart = ({product, ind}) => {
@@ -18,22 +19,22 @@ const Cart = ({product, ind}) => {
     try {
       if (product.quantity <= 1) {
         const {message} = await removeCart({id: product.product._id}).unwrap();
-        toast.success(message);
+        toast.success(message, {toastId: "cart-success"});
       } else {
         const {message} = await addCart({
           productId: product.product._id,
           quantity: product.quantity - 1,
         }).unwrap();
-        toast.success(message);
+        toast.success(message, {toastId: "cart-success"});
       }
     } catch (error) {
       if (error.status === "FETCH_ERROR") {
-        toast.error("server error");
+        toast.error("server error", {toastId: "cart-error"});
       } else {
         if (typeof error.data.message === "object") {
-          toast.error(error?.data?.message[0]);
+          toast.error(error?.data?.message[0], {toastId: "cart-error"});
         } else {
-          toast.error(error?.data?.message);
+          toast.error(error?.data?.message, {toastId: "cart-error"});
         }
       }
     }
@@ -118,12 +119,19 @@ const Cart = ({product, ind}) => {
           onClick={handleRemove}
         />
       </td>
-      <td className="px-6 py-4">{product.price}</td>
-      <td className="px-6 py-4">{product.taxPrice}</td>
-      <td className="px-6 py-4">{product.shippingPrice}</td>
-      <td className="px-6 py-4">{product.totalPrice}</td>
+      <td className="px-6 py-4">{formatFloatingNumber(product.price)}</td>
+      <td className="px-6 py-4">{formatFloatingNumber(product.taxPrice)}</td>
+      <td className="px-6 py-4">
+        {formatFloatingNumber(product.shippingPrice)}
+      </td>
+      <td className="px-6 py-4">{formatFloatingNumber(product.totalPrice)}</td>
     </tr>
   );
+};
+
+Cart.propTypes = {
+  product: propTypes.object,
+  ind: propTypes.number,
 };
 
 export default Cart;

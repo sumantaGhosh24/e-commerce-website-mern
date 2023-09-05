@@ -1,6 +1,7 @@
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {toast} from "react-toastify";
+import propTypes from "prop-types";
 
 import {useUpdateOrderMutation} from "../../app/features/order/orderApiSlice";
 import {Loading} from "../";
@@ -12,11 +13,11 @@ const EditOrderForm = ({order}) => {
   const navigate = useNavigate();
 
   const [orderData, setOrderData] = useState({
-    orderStatus: order.orderStatus,
-    isPaid: order.isPaid,
-    isDeliverd: order.isDeliverd,
-    paidAt: order.paidAt,
-    deliverAt: order.deliverAt,
+    orderStatus: order?.orderStatus,
+    isPaid: order?.isPaid,
+    isDeliverd: order?.isDeliverd,
+    paidAt: order?.paidAt,
+    deliverAt: order?.deliverAt,
   });
 
   const handleChange = (e) => {
@@ -41,9 +42,9 @@ const EditOrderForm = ({order}) => {
         paidAt: orderData.paidAt,
         deliverAt: orderData.deliverAt,
       }).unwrap();
-      toast.success(message);
+      toast.success(message, {toastId: "order-error"});
     } catch (error) {
-      toast.error(error?.data?.message);
+      toast.error(error?.data?.message, {toastId: "order-success"});
     }
   };
 
@@ -53,7 +54,7 @@ const EditOrderForm = ({order}) => {
 
   return (
     <>
-      <section className="max-w-7xl p-6 mx-auto my-20 shadow-xl rounded-xl">
+      <section className="max-w-7xl p-6 mx-auto my-20">
         {isError && (
           <h2 className="text-xl font-bold capitalize text-red-500 mb-5">
             {error.message}
@@ -298,6 +299,10 @@ const EditOrderForm = ({order}) => {
       </section>
     </>
   );
+};
+
+EditOrderForm.propTypes = {
+  order: propTypes.object,
 };
 
 export default EditOrderForm;

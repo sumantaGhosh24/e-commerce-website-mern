@@ -40,28 +40,18 @@ const Login = () => {
         password: "",
       });
       toast.success("login successful", {
-        autoClose: 2000,
-        delay: 300,
+        toastId: "login-success",
       });
       navigate("/welcome");
     } catch (err) {
       console.log(err);
       if (err.status === "FETCH_ERROR") {
-        toast.error(err.error, {
-          autoClose: 7000,
-          delay: 300,
-        });
+        toast.error(err.error, {toastId: "login-error"});
       } else {
         if (typeof err.data.message === "object") {
-          toast.error(err?.data?.message[0], {
-            autoClose: 7000,
-            delay: 300,
-          });
+          toast.error(err?.data?.message[0], {toastId: "login-error"});
         } else {
-          toast.error(err?.data?.message, {
-            autoClose: 7000,
-            delay: 300,
-          });
+          toast.error(err?.data?.message, {toastId: "login-error"});
         }
       }
     }
@@ -128,7 +118,7 @@ const Login = () => {
           </div>
         </form>
         <p className="text-center text-white text-lg">
-          Don't have an account?{" "}
+          Don&apos;t have an account?{" "}
           <Link to="/register" className="text-red-700 underline">
             Register
           </Link>

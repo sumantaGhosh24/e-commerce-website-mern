@@ -47,9 +47,9 @@ const AdminCreateCategory = () => {
     e.preventDefault();
     try {
       const {message} = await createCategory(catData).unwrap();
-      toast.success(message);
+      toast.success(message, {toastId: "category-success"});
     } catch (error) {
-      toast.error(error?.data?.message);
+      toast.error(error?.data?.message, {toastId: "category-error"});
     }
   };
 

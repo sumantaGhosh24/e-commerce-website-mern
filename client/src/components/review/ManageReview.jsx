@@ -1,3 +1,5 @@
+import propTypes from "prop-types";
+
 import {useGetAllReviewsQuery} from "../../app/features/review/reviewApiSlice";
 
 const ManageReview = ({reviewId, ind}) => {
@@ -41,6 +43,11 @@ const ManageReview = ({reviewId, ind}) => {
       </tr>
     );
   } else return null;
+};
+
+ManageReview.propTypes = {
+  reviewId: propTypes.string,
+  ind: propTypes.number,
 };
 
 export default ManageReview;

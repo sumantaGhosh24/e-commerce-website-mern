@@ -1,3 +1,5 @@
+import propTypes from "prop-types";
+
 import {Loading, ReviewCard} from "../";
 import {useGetReviewsQuery} from "../../app/features/review/reviewApiSlice";
 
@@ -41,6 +43,10 @@ const ProductReviews = ({id}) => {
   }
 
   return <>{content}</>;
+};
+
+ProductReviews.propTypes = {
+  id: propTypes.string,
 };
 
 export default ProductReviews;

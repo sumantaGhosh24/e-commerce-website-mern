@@ -3,6 +3,7 @@ import {BiImageAdd} from "react-icons/bi";
 import {FaTrash} from "react-icons/fa";
 import {useNavigate} from "react-router-dom";
 import {toast} from "react-toastify";
+import propTypes from "prop-types";
 
 import {
   useDeleteCategoryMutation,
@@ -21,8 +22,9 @@ const EditCategoryForm = ({category}) => {
   const navigate = useNavigate();
 
   const [catData, setCatData] = useState({
-    name: "",
+    name: category?.name,
     image:
+      category?.image ||
       "https://res.cloudinary.com/dzqgzsnoc/image/upload/v1661089281/e-commerce-api-men/z3c01tgtolouzyvccvmj.jpg",
   });
 
@@ -55,9 +57,9 @@ const EditCategoryForm = ({category}) => {
         name: catData.name,
         image: catData.image,
       }).unwrap();
-      toast.success(message);
+      toast.success(message, {toastId: "category-success"});
     } catch (error) {
-      toast.error(error?.data?.message);
+      toast.error(error?.data?.message, {toastId: "category-error"});
     }
   };
 
@@ -65,9 +67,9 @@ const EditCategoryForm = ({category}) => {
     e.preventDefault();
     try {
       const {message} = await deleteCategory({id: category.id}).unwrap();
-      toast.success(message);
+      toast.success(message, {toastId: "category-success"});
     } catch (error) {
-      toast.error(error?.data?.message);
+      toast.error(error?.data?.message, {toastId: "category-error"});
     }
   };
 
@@ -188,6 +190,10 @@ const EditCategoryForm = ({category}) => {
       </section>
     </>
   );
+};
+
+EditCategoryForm.propTypes = {
+  category: propTypes.object,
 };
 
 export default EditCategoryForm;

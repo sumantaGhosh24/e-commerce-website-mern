@@ -17,7 +17,7 @@ export const categoryApiSlice = apiSlice.injectEndpoints({
         });
         return categoryAdapter.setAll(initialState, loadedCategory);
       },
-      providesTags: (result, error, arg) => {
+      providesTags: (result) => {
         if (result?.ids) {
           return [
             {type: "Category", id: "LIST"},

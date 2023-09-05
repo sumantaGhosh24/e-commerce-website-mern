@@ -1,5 +1,6 @@
 import {FaEye} from "react-icons/fa";
 import {Link} from "react-router-dom";
+import propTypes from "prop-types";
 
 import {useGetCategoriesQuery} from "../../app/features/category/categoryApiSlice";
 
@@ -33,6 +34,11 @@ const ManageCategory = ({catId, ind}) => {
       </tr>
     );
   } else return null;
+};
+
+ManageCategory.propTypes = {
+  catId: propTypes.string,
+  ind: propTypes.number,
 };
 
 export default ManageCategory;

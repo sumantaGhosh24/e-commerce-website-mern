@@ -2,6 +2,7 @@ import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {toast} from "react-toastify";
 import {BiImageAdd} from "react-icons/bi";
+import propTypes from "prop-types";
 
 import {useGetCategoriesQuery} from "../../app/features/category/categoryApiSlice";
 import {useCreateProductMutation} from "../../app/features/product/productApiSlice";
@@ -35,10 +36,6 @@ const CreateProductForm = ({brand}) => {
       category: data?.ids.map((id) => data?.entities[id]),
     }),
   });
-
-  if (!category?.length) {
-    return <Loading />;
-  }
 
   const handleFile = async (e) => {
     const file = e.target.files;
@@ -77,11 +74,15 @@ const CreateProductForm = ({brand}) => {
     e.preventDefault();
     try {
       const {message} = await createProduct(productData).unwrap();
-      toast.success(message);
+      toast.success(message, {toastId: "product-success"});
     } catch (error) {
-      toast.error(error?.data?.message);
+      toast.error(error?.data?.message, {toastId: "product-error"});
     }
   };
+
+  if (!category?.length) {
+    return <Loading />;
+  }
 
   if (isLoading) {
     return <Loading />;
@@ -176,14 +177,14 @@ const CreateProductForm = ({brand}) => {
               />
             </div>
             <div>
-              <label class="text-white" for="content">
+              <label className="text-white" htmlFor="content">
                 Product Content
               </label>
               <textarea
                 id="content"
                 name="content"
                 type="textarea"
-                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md focus:border-blue-500 focus:outline-none focus:ring"
+                className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md focus:border-blue-500 focus:outline-none focus:ring"
                 onChange={handleChange}
                 value={productData.content}
                 required
@@ -218,11 +219,11 @@ const CreateProductForm = ({brand}) => {
               />
             </div>
             <div>
-              <label class="text-white" htmlFor="category">
+              <label className="text-white" htmlFor="category">
                 Product Category
               </label>
               <select
-                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md focus:border-blue-500 focus:outline-none focus:ring"
+                className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md focus:border-blue-500 focus:outline-none focus:ring"
                 id="category"
                 name="category"
                 onChange={handleChange}
@@ -238,11 +239,11 @@ const CreateProductForm = ({brand}) => {
               </select>
             </div>
             <div>
-              <label class="text-white" htmlFor="brand">
+              <label className="text-white" htmlFor="brand">
                 Product Brand
               </label>
               <select
-                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md focus:border-blue-500 focus:outline-none focus:ring"
+                className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md focus:border-blue-500 focus:outline-none focus:ring"
                 id="brand"
                 name="brand"
                 onChange={handleChange}
@@ -267,6 +268,10 @@ const CreateProductForm = ({brand}) => {
       </section>
     </>
   );
+};
+
+CreateProductForm.propTypes = {
+  brand: propTypes.array,
 };
 
 export default CreateProductForm;

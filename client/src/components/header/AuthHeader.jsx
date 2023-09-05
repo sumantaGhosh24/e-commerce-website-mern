@@ -81,7 +81,7 @@ const AuthHeader = () => {
   }
 
   if (isError) {
-    toast.error(error, {autoClose: 7000, delay: 300});
+    toast.error(error, {toastId: "header-error"});
   }
 
   return (

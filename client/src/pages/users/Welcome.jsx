@@ -80,7 +80,7 @@ const Welcome = () => {
             <span className="text-white mr-3 text-xl">Filters: </span>
             <select
               name="category"
-              value={category}
+              value={sCategory}
               onChange={handleCategory}
               className="p-2 w-full"
             >

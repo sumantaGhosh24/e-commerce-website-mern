@@ -3,6 +3,7 @@ import {BiImageAdd} from "react-icons/bi";
 import {FaTrash} from "react-icons/fa";
 import {useNavigate} from "react-router-dom";
 import {toast} from "react-toastify";
+import propTypes from "prop-types";
 
 import {
   useDeleteProductMutation,
@@ -71,9 +72,9 @@ const EditProductForm = ({product}) => {
         stock: productData.stock,
         brand: productData.brand,
       }).unwrap();
-      toast.success(message);
+      toast.success(message, {toastId: "product-success"});
     } catch (error) {
-      toast.error(error?.data?.message);
+      toast.error(error?.data?.message, {toastId: "product-error"});
     }
   };
 
@@ -81,9 +82,9 @@ const EditProductForm = ({product}) => {
     e.preventDefault();
     try {
       const {message} = await deleteProduct({id: product.id}).unwrap();
-      toast.success(message);
+      toast.success(message, {toastId: "product-success"});
     } catch (error) {
-      toast.error(error?.data?.message);
+      toast.error(error?.data?.message, {toastId: "product-error"});
     }
   };
 
@@ -308,6 +309,10 @@ const EditProductForm = ({product}) => {
       </section>
     </>
   );
+};
+
+EditProductForm.propTypes = {
+  product: propTypes.object,
 };
 
 export default EditProductForm;

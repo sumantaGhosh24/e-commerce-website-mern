@@ -1,5 +1,6 @@
 import {useState, useEffect} from "react";
 import {toast} from "react-toastify";
+import propTypes from "prop-types";
 
 import {useCreateReviewMutation} from "../../app/features/review/reviewApiSlice";
 import {Loading} from "../";
@@ -32,9 +33,9 @@ const CreateReview = ({id}) => {
     e.preventDefault();
     try {
       const {message} = await createReview(reviewData).unwrap();
-      toast.success(message);
+      toast.success(message, {toastId: "review-success"});
     } catch (error) {
-      toast.error(error?.data?.message);
+      toast.error(error?.data?.message, {toastId: "review-error"});
     }
   };
 
@@ -97,6 +98,10 @@ const CreateReview = ({id}) => {
       </section>
     </>
   );
+};
+
+CreateReview.propTypes = {
+  id: propTypes.string,
 };
 
 export default CreateReview;

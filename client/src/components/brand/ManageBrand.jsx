@@ -1,5 +1,6 @@
 import {FaEye} from "react-icons/fa";
 import {Link} from "react-router-dom";
+import propTypes from "prop-types";
 
 import {useGetBrandsQuery} from "../../app/features/brand/brandApiSlice";
 
@@ -33,6 +34,11 @@ const ManageBrand = ({brandId, ind}) => {
       </tr>
     );
   } else return null;
+};
+
+ManageBrand.propTypes = {
+  brandId: propTypes.string,
+  ind: propTypes.number,
 };
 
 export default ManageBrand;

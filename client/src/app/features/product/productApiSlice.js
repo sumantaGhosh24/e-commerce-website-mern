@@ -20,7 +20,7 @@ export const productApiSlice = apiSlice.injectEndpoints({
         });
         return productAdapter.setAll(initialState, loadedProduct);
       },
-      providesTags: (result, error, arg) => {
+      providesTags: (result) => {
         if (result?.ids) {
           return [
             {type: "Product", id: "LIST"},
@@ -38,7 +38,7 @@ export const productApiSlice = apiSlice.injectEndpoints({
         });
         return productAdapter.setAll(initialState, loadedProduct);
       },
-      providesTags: (result, error, arg) => {
+      providesTags: (result) => {
         if (result?.ids) {
           return [
             {type: "Product", id: "LIST"},

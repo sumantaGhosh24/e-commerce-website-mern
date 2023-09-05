@@ -1,3 +1,5 @@
+import propTypes from "prop-types";
+
 import {useGetReviewsQuery} from "../../app/features/review/reviewApiSlice";
 
 const ReviewCard = ({reviewId, id}) => {
@@ -34,6 +36,11 @@ const ReviewCard = ({reviewId, id}) => {
       </div>
     );
   } else return null;
+};
+
+ReviewCard.propTypes = {
+  reviewId: propTypes.string,
+  id: propTypes.string,
 };
 
 export default ReviewCard;

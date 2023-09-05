@@ -17,7 +17,7 @@ export const reviewApiSlice = apiSlice.injectEndpoints({
         });
         return reviewAdapter.setAll(initialState, loadedReview);
       },
-      providesTags: (result, error, arg) => {
+      providesTags: (result) => {
         if (result?.ids) {
           return [
             {type: "Review", id: "LIST"},
@@ -35,7 +35,7 @@ export const reviewApiSlice = apiSlice.injectEndpoints({
         });
         return reviewAdapter.setAll(initialState, loadedReview);
       },
-      providesTags: (result, error, arg) => {
+      providesTags: (result) => {
         if (result?.ids) {
           return [
             {type: "Review", id: "LIST"},
@@ -53,7 +53,7 @@ export const reviewApiSlice = apiSlice.injectEndpoints({
         });
         return reviewAdapter.setAll(initialState, loadedReview);
       },
-      providesTags: (result, error, arg) => {
+      providesTags: (result) => {
         if (result?.ids) {
           return [
             {type: "Review", id: "LIST"},

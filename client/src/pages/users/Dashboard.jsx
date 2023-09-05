@@ -21,6 +21,7 @@ const Dashboard = () => {
     {id: 5, user: data?.totalAdmin, label: "Admins"},
   ];
 
+  // eslint-disable-next-line no-unused-vars
   const [userChartData, setUserChartData] = useState({
     labels: userData.map((data) => data.label),
     datasets: [
@@ -49,6 +50,7 @@ const Dashboard = () => {
     {id: 6, count: data?.sellProduct[0]?.sell, label: "Total Sell Product"},
   ];
 
+  // eslint-disable-next-line no-unused-vars
   const [countChartData, setCountChartData] = useState({
     labels: countData.map((data) => data.label),
     datasets: [
@@ -76,6 +78,7 @@ const Dashboard = () => {
     {id: 4, amount: data?.shippingPrice[0]?.amount, label: "Shipping Price"},
   ];
 
+  // eslint-disable-next-line no-unused-vars
   const [priceChartData, setPriceChartData] = useState({
     labels: priceData.map((data) => data.label),
     datasets: [

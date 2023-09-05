@@ -1,5 +1,6 @@
 import {FaTrash} from "react-icons/fa";
 import {toast} from "react-toastify";
+import propTypes from "prop-types";
 
 import {
   useDeleteUserMutation,
@@ -17,9 +18,9 @@ const ManageUser = ({userId, ind}) => {
     e.preventDefault();
     try {
       const {message} = await deleteUser({id: userId}).unwrap();
-      toast.success(message);
+      toast.success(message, {toastId: "user-success"});
     } catch (error) {
-      toast.error(error?.data?.message);
+      toast.error(error?.data?.message, {toastId: "user-error"});
     }
   };
 
@@ -78,6 +79,11 @@ const ManageUser = ({userId, ind}) => {
       </tr>
     );
   } else return null;
+};
+
+ManageUser.propTypes = {
+  userId: propTypes.string,
+  ind: propTypes.number,
 };
 
 export default ManageUser;

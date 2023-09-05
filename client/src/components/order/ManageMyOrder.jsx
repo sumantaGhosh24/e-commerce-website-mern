@@ -1,3 +1,5 @@
+import propTypes from "prop-types";
+
 import {useGetUserOrderQuery} from "../../app/features/order/orderApiSlice";
 import {getWordStr} from "../../lib";
 
@@ -114,6 +116,11 @@ const ManageMyOrder = ({orderId, ind}) => {
       </tr>
     );
   } else return null;
+};
+
+ManageMyOrder.propTypes = {
+  orderId: propTypes.string,
+  ind: propTypes.number,
 };
 
 export default ManageMyOrder;

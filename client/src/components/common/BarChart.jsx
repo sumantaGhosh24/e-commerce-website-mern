@@ -1,4 +1,5 @@
 import {Bar} from "react-chartjs-2";
+import propTypes from "prop-types";
 
 const BarChart = ({chartData, text}) => {
   return (
@@ -19,6 +20,11 @@ const BarChart = ({chartData, text}) => {
       />
     </div>
   );
+};
+
+BarChart.propTypes = {
+  chartData: propTypes.object,
+  text: propTypes.string,
 };
 
 export default BarChart;

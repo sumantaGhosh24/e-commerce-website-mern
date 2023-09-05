@@ -3,6 +3,7 @@ import {BiImageAdd} from "react-icons/bi";
 import {FaTrash} from "react-icons/fa";
 import {useNavigate} from "react-router-dom";
 import {toast} from "react-toastify";
+import propTypes from "prop-types";
 
 import {
   useDeleteBrandMutation,
@@ -20,8 +21,9 @@ const EditBrandForm = ({brand}) => {
   const navigate = useNavigate();
 
   const [catData, setCatData] = useState({
-    name: "",
+    name: brand?.name,
     image:
+      brand?.image ||
       "https://res.cloudinary.com/dzqgzsnoc/image/upload/v1661089281/e-commerce-api-men/z3c01tgtolouzyvccvmj.jpg",
   });
 
@@ -54,9 +56,9 @@ const EditBrandForm = ({brand}) => {
         name: catData.name,
         image: catData.image,
       }).unwrap();
-      toast.success(message);
+      toast.success(message, {toastId: "brand-success"});
     } catch (error) {
-      toast.error(error?.data?.message);
+      toast.error(error?.data?.message, {toastId: "brand-error"});
     }
   };
 
@@ -64,9 +66,9 @@ const EditBrandForm = ({brand}) => {
     e.preventDefault();
     try {
       const {message} = await deleteBrand({id: brand.id}).unwrap();
-      toast.success(message);
+      toast.success(message, {toastId: "brand-success"});
     } catch (error) {
-      toast.error(error?.data?.message);
+      toast.error(error?.data?.message, {toastId: "brand-error"});
     }
   };
 
@@ -84,11 +86,11 @@ const EditBrandForm = ({brand}) => {
         )}
         <h2 className="text-xl font-bold capitalize mb-5 ">Detailed Brand</h2>
         <div className="max-w-sm rounded overflow-hidden shadow-xl">
-          <img
+          {/* <img
             className="w-[300px] h-[300px]"
             src={brand?.image}
             alt={brand?.name}
-          />
+          /> */}
           <div className="px-6 py-4">
             <div className="font-bold text-xl mb-2 ">{brand?.name}</div>
           </div>
@@ -185,6 +187,10 @@ const EditBrandForm = ({brand}) => {
       </section>
     </>
   );
+};
+
+EditBrandForm.propTypes = {
+  brand: propTypes.object,
 };
 
 export default EditBrandForm;

@@ -17,7 +17,7 @@ export const brandApiSlice = apiSlice.injectEndpoints({
         });
         return brandAdapter.setAll(initialState, loadedBrand);
       },
-      providesTags: (result, error, arg) => {
+      providesTags: (result) => {
         if (result?.ids) {
           return [
             {type: "Brand", id: "LIST"},

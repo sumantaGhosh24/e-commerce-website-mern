@@ -69,16 +69,16 @@ const Register = () => {
         addressline1: "",
         addressline2: "",
       });
-      toast.success(message, {autoClose: 2000, delay: 300});
+      toast.success(message, {toastId: "register-success"});
       navigate("/login");
     } catch (error) {
       if (error.status === "FETCH_ERROR") {
-        toast.error("server error", {autoClose: 7000, delay: 300});
+        toast.error("server error", {toastId: "register-error"});
       } else {
         if (typeof error.data.message === "object") {
-          toast.error(error?.data?.message[0], {autoClose: 7000, delay: 300});
+          toast.error(error?.data?.message[0], {toastId: "register-error"});
         } else {
-          toast.error(error?.data?.message, {autoClose: 7000, delay: 300});
+          toast.error(error?.data?.message, {toastId: "register-error"});
         }
       }
     }

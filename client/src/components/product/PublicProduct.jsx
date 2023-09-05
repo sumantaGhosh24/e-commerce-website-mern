@@ -1,4 +1,5 @@
 import {Link} from "react-router-dom";
+import propTypes from "prop-types";
 
 import {useGetProductsQuery} from "../../app/features/product/productApiSlice";
 import {getWordStr} from "../../lib";
@@ -37,6 +38,10 @@ const PublicProduct = ({productId}) => {
       </div>
     );
   } else return null;
+};
+
+PublicProduct.propTypes = {
+  productId: propTypes.string,
 };
 
 export default PublicProduct;

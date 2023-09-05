@@ -17,7 +17,7 @@ export const orderApiSlice = apiSlice.injectEndpoints({
         });
         return orderAdapter.setAll(initialState, loadedOrder);
       },
-      providesTags: (result, error, arg) => {
+      providesTags: (result) => {
         if (result?.ids) {
           return [
             {type: "Order", id: "LIST"},
@@ -35,7 +35,7 @@ export const orderApiSlice = apiSlice.injectEndpoints({
         });
         return orderAdapter.setAll(initialState, loadedOrder);
       },
-      providesTags: (result, error, arg) => {
+      providesTags: (result) => {
         if (result?.ids) {
           return [
             {type: "Order", id: "LIST"},

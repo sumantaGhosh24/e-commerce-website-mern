@@ -1,5 +1,6 @@
 import {FaEye} from "react-icons/fa";
 import {Link} from "react-router-dom";
+import propTypes from "prop-types";
 
 import {useGetOrdersQuery} from "../../app/features/order/orderApiSlice";
 
@@ -124,6 +125,11 @@ const ManageOrder = ({orderId, ind}) => {
       </tr>
     );
   } else return null;
+};
+
+ManageOrder.propTypes = {
+  orderId: propTypes.string,
+  ind: propTypes.number,
 };
 
 export default ManageOrder;
