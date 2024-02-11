@@ -86,11 +86,11 @@ const EditBrandForm = ({brand}) => {
         )}
         <h2 className="text-xl font-bold capitalize mb-5 ">Detailed Brand</h2>
         <div className="max-w-sm rounded overflow-hidden shadow-xl">
-          {/* <img
+          <img
             className="w-[300px] h-[300px]"
             src={brand?.image}
             alt={brand?.name}
-          /> */}
+          />
           <div className="px-6 py-4">
             <div className="font-bold text-xl mb-2 ">{brand?.name}</div>
           </div>

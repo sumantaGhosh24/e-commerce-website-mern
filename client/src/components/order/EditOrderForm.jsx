@@ -90,12 +90,12 @@ const EditOrderForm = ({order}) => {
                   >
                     <img
                       className="w-24 h-24 p-6 bg-white border border-gray-200 rounded-lg shadow mb-3"
-                      src={item.product.image[0]}
-                      alt={item.product._id}
+                      src={item?.product?.image[0]}
+                      alt={item?.product?._id}
                     />
                     <p className="mb-3 font-normal text-gray-500">
                       <span className="font-bold">Product: </span>
-                      {item.product.title}
+                      {item?.product?.title}
                     </p>
                     <p className="mb-3 font-normal text-gray-500">
                       <span className="font-bold">Quantity: </span>
