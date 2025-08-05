@@ -27,8 +27,7 @@ const Register = () => {
     state: "",
     country: "",
     zip: "",
-    addressline1: "",
-    addressline2: "",
+    addressline: "",
   });
 
   const navigate = useNavigate();
@@ -66,8 +65,7 @@ const Register = () => {
         state: "",
         country: "",
         zip: "",
-        addressline1: "",
-        addressline2: "",
+        addressline: "",
       });
       toast.success(message, {toastId: "register-success"});
       navigate("/login");
@@ -485,12 +483,12 @@ const Register = () => {
               />
             </div>
             <div>
-              <label className="text-white" htmlFor="addressline1">
-                Address Line 1
+              <label className="text-white" htmlFor="addressline">
+                Address Line
               </label>
               <input
-                id="addressline1"
-                name="addressline1"
+                id="addressline"
+                name="addressline"
                 type="text"
                 className="
                 block
@@ -505,32 +503,7 @@ const Register = () => {
                 focus:border-blue-500 focus:outline-none focus:ring
               "
                 onChange={handleChange}
-                value={user.addressline1}
-                required
-              />
-            </div>
-            <div>
-              <label className="text-white" htmlFor="addressline2">
-                Address Line 2
-              </label>
-              <input
-                id="addressline2"
-                name="addressline2"
-                type="text"
-                className="
-                block
-                w-full
-                px-4
-                py-2
-                mt-2
-                text-gray-700
-                bg-white
-                border border-gray-300
-                rounded-md
-                focus:border-blue-500 focus:outline-none focus:ring
-              "
-                onChange={handleChange}
-                value={user.addressline2}
+                value={user.addressline}
                 required
               />
             </div>

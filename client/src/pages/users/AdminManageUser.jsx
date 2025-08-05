@@ -85,10 +85,7 @@ const AdminManageUser = () => {
                 Zip
               </th>
               <th scope="col" className="px-6 py-3">
-                Address Line 1
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Address Line 2
+                Address Line
               </th>
               <th scope="col" className="px-6 py-3">
                 Status

@@ -25,8 +25,7 @@ const userCtrl = {
         state,
         country,
         zip,
-        addressline1,
-        addressline2,
+        addressline,
         image,
       } = req.body;
       const errors = [];
@@ -87,8 +86,7 @@ const userCtrl = {
         state: state.toLowerCase(),
         country: country.toLowerCase(),
         zip,
-        addressline1: addressline1.toLowerCase(),
-        addressline2: addressline2.toLowerCase(),
+        addressline: addressline.toLowerCase(),
       });
       await newUser.save();
       return res.status(201).json({message: "User registration successful!"});

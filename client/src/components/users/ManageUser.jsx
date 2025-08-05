@@ -45,8 +45,7 @@ const ManageUser = ({userId, ind}) => {
         <td className="px-6 py-4">{user.state}</td>
         <td className="px-6 py-4">{user.country}</td>
         <td className="px-6 py-4">{user.zip}</td>
-        <td className="px-6 py-4">{user.addressline1}</td>
-        <td className="px-6 py-4">{user.addressline2}</td>
+        <td className="px-6 py-4">{user.addressline}</td>
         <td className="px-6 py-4">
           {user.status === "active" ? (
             <p className="bg-green-500 p-2 rounded-lg text-white">Active</p>

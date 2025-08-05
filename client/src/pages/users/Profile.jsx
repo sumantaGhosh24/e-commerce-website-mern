@@ -81,12 +81,8 @@ const Profile = () => {
               {user.zip}
             </p>
             <p className="pt-8 text-lg font-medium">
-              <span className="font-bold">Address Line 1: </span>
-              {user.addressline1}
-            </p>
-            <p className="pt-8 text-lg font-medium">
-              <span className="font-bold">Address Line 2: </span>
-              {user.addressline2}
+              <span className="font-bold">Address Line: </span>
+              {user.addressline}
             </p>
             <p className="pt-8 text-lg font-medium">
               <span className="font-bold">Status: </span>

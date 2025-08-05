@@ -4,10 +4,7 @@ const Product = require("../models/productModel");
 const brandCtrl = {
   getBrands: async (req, res) => {
     try {
-      const brands = await Brand.find().populate(
-        "createdBy",
-        "_id username email mobileNumber image"
-      );
+      const brands = await Brand.find();
       return res.json(brands);
     } catch (error) {
       return res.status(500).json({message: error.message});
@@ -16,14 +13,12 @@ const brandCtrl = {
   createBrand: async (req, res) => {
     try {
       const {name, image} = req.body;
-      const createdBy = req.id;
       const brand = await Brand.findOne({name});
       if (brand)
         return res.status(400).json({message: "This Brand Already Created."});
       const newBrand = new Brand({
         name: name.toLowerCase(),
         image,
-        createdBy,
       });
       await newBrand.save();
       return res.json({message: "Brand Created."});

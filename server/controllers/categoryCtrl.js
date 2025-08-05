@@ -4,10 +4,7 @@ const Product = require("../models/productModel");
 const categoryCtrl = {
   getCategories: async (req, res) => {
     try {
-      const categories = await Category.find().populate(
-        "createdBy",
-        "_id username email mobileNumber image"
-      );
+      const categories = await Category.find();
       return res.json(categories);
     } catch (error) {
       return res.status(500).json({message: error.message});
@@ -16,7 +13,6 @@ const categoryCtrl = {
   createCategory: async (req, res) => {
     try {
       const {name, image} = req.body;
-      const createdBy = req.id;
       const category = await Category.findOne({name});
       if (category)
         return res
@@ -25,7 +21,6 @@ const categoryCtrl = {
       const newCategory = new Category({
         name: name.toLowerCase(),
         image,
-        createdBy,
       });
       await newCategory.save();
       return res.json({message: "Category Created."});

@@ -5,7 +5,6 @@ import {
   useGetRazorpayMutation,
   useVerificationMutation,
 } from "../../app/features/payment/paymentApiSlice";
-import {RAZORPAY_KEY} from "../../config";
 import {formatFloatingNumber, getSum} from "../../lib";
 
 const Checkout = ({cart}) => {
@@ -56,7 +55,7 @@ const Checkout = ({cart}) => {
     }
     const {amount, id: order_id, currency} = result;
     const options = {
-      key: RAZORPAY_KEY,
+      key: import.meta.env.VITE_RAZORPAY_KEY,
       amount: Number(amount),
       currency: currency,
       order_id: order_id,

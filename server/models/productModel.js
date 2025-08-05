@@ -2,55 +2,21 @@ const mongoose = require("mongoose");
 
 const productSchema = new mongoose.Schema(
   {
-    user: {
-      type: mongoose.Schema.Types.ObjectId,
-      required: true,
-      ref: "User",
-    },
-    title: {
-      type: String,
-      trim: true,
-      required: true,
-    },
-    image: {
-      type: Array,
-      default: [],
-    },
-    description: {
-      type: String,
-      required: true,
-    },
-    content: {
-      type: String,
-      required: true,
-    },
+    user: {type: mongoose.Schema.Types.ObjectId, required: true, ref: "User"},
+    title: {type: String, trim: true, required: true},
+    image: {type: Array, default: []},
+    description: {type: String, required: true},
+    content: {type: String, required: true},
     category: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
       ref: "Category",
     },
-    brand: {
-      type: mongoose.Schema.Types.ObjectId,
-      required: true,
-      ref: "Brand",
-    },
-    price: {
-      type: Number,
-      trim: true,
-      required: true,
-    },
-    checked: {
-      type: Boolean,
-      default: false,
-    },
-    stock: {
-      type: Number,
-      default: 0,
-    },
-    sold: {
-      type: Number,
-      default: 0,
-    },
+    brand: {type: mongoose.Schema.Types.ObjectId, required: true, ref: "Brand"},
+    price: {type: Number, trim: true, required: true},
+    checked: {type: Boolean, default: false},
+    stock: {type: Number, default: 0},
+    sold: {type: Number, default: 0},
   },
   {timestamps: true}
 );
