@@ -11,7 +11,7 @@ const PublicProduct = ({productId}) => {
 
   if (product) {
     return (
-      <div className="bg-white border border-gray-200 rounded-lg shadow mt-10">
+      <div className="bg-white border border-gray-200 rounded-md shadow mt-10">
         <Link to={`/product/${product._id}`}>
           <img
             className="rounded-t-lg"

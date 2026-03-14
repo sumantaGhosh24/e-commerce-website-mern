@@ -23,8 +23,8 @@ const MyCart = () => {
 
   return (
     <>
-      <section className="max-w-7xl p-6 mx-auto my-20 shadow-xl rounded-xl">
-        <h2 className="text-3xl font-bold capitalize mb-10">My Cart</h2>
+      <section className="container p-6 mx-auto my-10 shadow-md rounded-md">
+        <h2 className="text-3xl font-bold mb-8">🛒 My Cart</h2>
         {isError && (
           <h3 className="text-xl font-bold capitalize mb-10">
             {error.message}
@@ -67,17 +67,11 @@ const MyCart = () => {
                   </th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody className="divide-y">
                 {cart?.product?.map((pro, ind) => (
                   <Cart product={pro} ind={ind + 1} key={ind} />
                 ))}
               </tbody>
-              {cart?.product?.length === 0 && (
-                <div className="font-bold text-xl">Your cart is empty.</div>
-              )}
-              {!cart && (
-                <div className="font-bold text-xl">Your cart is empty.</div>
-              )}
             </table>
           </div>
         )}

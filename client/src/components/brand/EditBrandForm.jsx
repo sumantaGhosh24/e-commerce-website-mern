@@ -78,14 +78,14 @@ const EditBrandForm = ({brand}) => {
 
   return (
     <>
-      <section className="max-w-7xl p-6 mx-auto my-20 shadow-xl rounded-xl ">
+      <section className="container p-6 mx-auto my-10 shadow-md rounded-md ">
         {isError && (
           <h2 className="text-xl font-bold capitalize text-red-500 mb-5">
             {error.message}
           </h2>
         )}
         <h2 className="text-xl font-bold capitalize mb-5 ">Detailed Brand</h2>
-        <div className="max-w-sm rounded overflow-hidden shadow-xl">
+        <div className="max-w-sm rounded overflow-hidden">
           <img
             className="w-[300px] h-[300px]"
             src={brand?.image}
@@ -99,7 +99,7 @@ const EditBrandForm = ({brand}) => {
           <FaTrash className="btn-icons" /> Delete Brand
         </button>
       </section>
-      <section className="max-w-7xl p-6 mx-auto my-20 shadow-xl rounded-xl bg-blue-500">
+      <section className="container p-6 mx-auto my-10 shadow-md rounded-md bg-blue-500">
         <h2 className="text-xl font-bold capitalize mb-5 text-white">
           Update Brand
         </h2>
@@ -107,7 +107,7 @@ const EditBrandForm = ({brand}) => {
           <img
             src={catData.image}
             alt="brand"
-            className="mx-auto rounded-full"
+            className="mx-auto rounded-full h-[300px]"
           />
         </div>
         <div>

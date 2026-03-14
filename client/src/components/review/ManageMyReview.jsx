@@ -18,9 +18,9 @@ const ManageMyReview = ({reviewId, ind}) => {
         <td className="px-6 py-4">{review.comment}</td>
         <td className="px-6 py-4">{review.rating}</td>
         <td className="px-6 py-4">
-          <div className="max-w-sm p-2 bg-white border border-gray-200 rounded-lg shadow">
+          <div className="max-w-sm p-2 bg-white border border-gray-200 rounded-md shadow">
             <img
-              className="w-24 h-24 p-2 mb-3 bg-white border border-gray-200 rounded-lg shadow"
+              className="w-24 h-24 p-2 mb-3 bg-white border border-gray-200 rounded-md shadow"
               src={review?.product?.image[0]}
               alt={review?.product?._id}
             />
@@ -30,9 +30,9 @@ const ManageMyReview = ({reviewId, ind}) => {
           </div>
         </td>
         <td className="px-6 py-4">
-          <div className="max-w-sm p-2 bg-white border border-gray-200 rounded-lg shadow">
+          <div className="max-w-sm p-2 bg-white border border-gray-200 rounded-md shadow">
             <img
-              className="w-24 h-24 mb-3 p-2 bg-white border border-gray-200 rounded-lg shadow"
+              className="w-24 h-24 mb-3 p-2 bg-white border border-gray-200 rounded-md shadow"
               src={review?.user?.image}
               alt={review?.user?._id}
             />

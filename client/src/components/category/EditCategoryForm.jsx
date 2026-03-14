@@ -79,7 +79,7 @@ const EditCategoryForm = ({category}) => {
 
   return (
     <>
-      <section className="max-w-7xl p-6 mx-auto my-20 shadow-xl rounded-xl ">
+      <section className="container p-6 mx-auto my-20 shadow-md rounded-md">
         {isError && (
           <h2 className="text-xl font-bold capitalize text-red-500 mb-5">
             {error.message}
@@ -88,7 +88,7 @@ const EditCategoryForm = ({category}) => {
         <h2 className="text-xl font-bold capitalize mb-5 ">
           Detailed Category
         </h2>
-        <div className="max-w-sm rounded overflow-hidden shadow-xl">
+        <div className="max-w-sm rounded overflow-hidden">
           <img
             className="w-[300px] h-[300px]"
             src={category?.image}
@@ -102,7 +102,7 @@ const EditCategoryForm = ({category}) => {
           <FaTrash className="btn-icons" /> Delete Category
         </button>
       </section>
-      <section className="max-w-7xl p-6 mx-auto my-20 shadow-xl rounded-xl bg-blue-500">
+      <section className="container p-6 mx-auto my-10 shadow-md rounded-md bg-blue-500">
         <h2 className="text-xl font-bold capitalize mb-5 text-white">
           Update Category
         </h2>
@@ -110,7 +110,7 @@ const EditCategoryForm = ({category}) => {
           <img
             src={catData.image}
             alt="category"
-            className="mx-auto rounded-full"
+            className="mx-auto rounded-full h-[300px]"
           />
         </div>
         <div>

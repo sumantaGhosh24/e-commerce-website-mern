@@ -102,7 +102,7 @@ const MyOrder = () => {
   }
 
   return (
-    <section className="max-w-7xl p-6 mx-auto my-20 shadow-xl rounded-xl">
+    <section className="container p-6 mx-auto my-10 shadow-md rounded-md">
       <h2 className="text-3xl font-bold capitalize mb-10">My Orders</h2>
       {content}
     </section>

@@ -60,7 +60,7 @@ const Welcome = () => {
       ids.map((productId) => <Product key={productId} productId={productId} />);
 
     content = (
-      <div className="container mx-auto shadow-xl rounded-xl my-10 p-5">
+      <div className="container mx-auto shadow-md rounded-md my-10 p-5">
         <h1 className="mb-5 text-2xl font-bold">All Products</h1>
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
           {tableContent}
@@ -71,7 +71,7 @@ const Welcome = () => {
 
   return (
     <>
-      <section className="max-w-7xl p-6 mx-auto my-20 shadow-xl rounded-xl bg-blue-500">
+      <section className="container p-6 mx-auto my-10 shadow-md rounded-md bg-blue-500">
         <h2 className="text-3xl font-bold capitalize mb-10 text-white">
           Search Product
         </h2>

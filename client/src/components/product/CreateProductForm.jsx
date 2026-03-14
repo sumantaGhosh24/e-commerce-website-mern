@@ -90,7 +90,7 @@ const CreateProductForm = ({brand}) => {
 
   return (
     <>
-      <section className="max-w-7xl p-6 mx-auto my-20 shadow-xl rounded-xl bg-blue-500">
+      <section className="container p-6 mx-auto my-10 shadow-md rounded-md bg-blue-500">
         <h2 className="text-3xl font-bold capitalize mb-10 text-white">
           Create Product
         </h2>

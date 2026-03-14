@@ -17,26 +17,6 @@ const ManageProduct = ({productId, ind}) => {
           {ind}
         </th>
         <td className="px-6 py-4">{product.id}</td>
-        <td className="px-6 py-4">
-          <div className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow">
-            <img
-              className="w-24 h-24 p-6 bg-white border border-gray-200 rounded-lg shadow"
-              src={product?.user?.image}
-              alt={product?.user?._id}
-            />
-            <a href="#">
-              <h5 className="mb-2 text-2xl font-semibold tracking-tight text-gray-900">
-                {product?.user?.username}
-              </h5>
-            </a>
-            <p className="mb-3 font-normal text-gray-500">
-              {product?.user?.email}
-            </p>
-            <p className="mb-3 font-normal text-gray-500">
-              {product?.user?.mobileNumber}
-            </p>
-          </div>
-        </td>
         <td className="px-6 py-4">{getWordStr(product.title, 7)}</td>
         <td className="px-6 py-4">
           {product.image.map((image, i) => (
@@ -81,19 +61,17 @@ const ManageProduct = ({productId, ind}) => {
         <td className="px-6 py-4">{product.price}</td>
         <td className="px-6 py-4">
           {product.checked === true ? (
-            <p className="bg-green-600 p-3 rounded-lg text-white">
+            <p className="bg-green-600 p-3 rounded-lg text-white truncate">
               Checked by Admin
             </p>
           ) : (
-            <p className="bg-red-600 p-3 rounded-lg text-white">
+            <p className="bg-red-600 p-3 rounded-lg text-white truncate">
               Not Checked by Admin
             </p>
           )}
         </td>
         <td className="px-6 py-4">{product.stock}</td>
         <td className="px-6 py-4">{product.sold}</td>
-        <td className="px-6 py-4">{product.createdAt}</td>
-        <td className="px-6 py-4">{product.updatedAt}</td>
         <td className="px-6 py-4">
           <Link className="btn-icon" to={`/admin-product/${product.id}`}>
             <FaEye className="mr-2 h-10 w-10" /> Manage Product

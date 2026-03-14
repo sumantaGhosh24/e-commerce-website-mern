@@ -51,82 +51,78 @@ const ProductDetailed = () => {
 
   return (
     <>
-      <section className="max-w-7xl p-6 mx-auto my-20 shadow-xl rounded-xl">
-        <h2 className="text-3xl font-bold capitalize mb-10">
-          Detailed Product
-        </h2>
-        <div className="rounded overflow-hidden">
-          <div className="flex mb-5">
-            {product.image.map((img, i) => (
-              <img
-                className="w-24 h-24 rounded-full mx-3"
-                src={img}
-                alt="product"
-                key={i}
-              />
-            ))}
+      <section className="container p-6 mx-auto my-10 shadow-md rounded-md">
+        <h2 className="text-3xl font-bold mb-10">Product Details</h2>
+        <div className="grid md:grid-cols-2 gap-10">
+          <div>
+            <img
+              src={product.image[0]}
+              alt="product"
+              className="w-full h-[400px] object-cover rounded-xl mb-4"
+            />
+            <div className="flex gap-3">
+              {product.image.map((img, i) => (
+                <img
+                  key={i}
+                  src={img}
+                  alt="product"
+                  className="w-20 h-20 object-cover rounded-md border cursor-pointer hover:scale-105 transition"
+                />
+              ))}
+            </div>
           </div>
-          <div className="px-6 py-4">
-            <div className="text-xl mb-5">
-              <span className="font-bold">Title: </span> {product.title}
+          <div className="space-y-5">
+            <h3 className="text-3xl font-bold">{product.title}</h3>
+            <p className="text-gray-600">{product.description}</p>
+            <p className="text-gray-700 leading-relaxed">{product.content}</p>
+            <div className="text-3xl font-bold text-blue-600">
+              ₹{product.price}
             </div>
-            <div className="text-xl mb-5">
-              <span className="font-bold">Description: </span>{" "}
-              {product.description}
-            </div>
-            <div className="text-xl mb-5">
-              <span className="font-bold">Content: </span> {product.content}
-            </div>
-            <div className="text-xl mb-5">
-              <span className="font-bold">Price: </span> {product.price}
-            </div>
-            <div className="font-bold text-xl mb-5">
-              <span className="font-bold">Category: </span>
-              <div className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow mt-5 flex">
-                <img
-                  className="w-24 h-24 bg-white border border-gray-200 rounded-lg shadow"
-                  src={product.category.image}
-                  alt={product.category._id}
-                />
-                <h5 className="ml-2 text-2xl font-semibold tracking-tight text-gray-900">
-                  {product.category.name}
-                </h5>
+            <p className="text-sm text-gray-500">
+              Stock: <span className="font-semibold">{product.stock}</span>
+            </p>
+            <div className="flex items-center gap-3 border rounded-md p-3">
+              <img
+                src={product.category.image}
+                alt={product.category._id}
+                className="w-12 h-12 rounded-md object-cover"
+              />
+              <div>
+                <p className="text-sm text-gray-500">Category</p>
+                <p className="font-semibold">{product.category.name}</p>
               </div>
             </div>
-            <div className="font-bold text-xl mb-2">
-              <span className="font-bold">Brand: </span>
-              <div className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow mt-5 flex">
-                <img
-                  className="w-24 h-24 bg-white border border-gray-200 rounded-lg shadow"
-                  src={product.brand.image}
-                  alt={product.brand._id}
-                />
-                <h5 className="ml-2 text-2xl font-semibold tracking-tight text-gray-900">
-                  {product.brand.name}
-                </h5>
+            <div className="flex items-center gap-3 border rounded-md p-3">
+              <img
+                src={product.brand.image}
+                alt={product.brand._id}
+                className="w-12 h-12 rounded-md object-cover"
+              />
+              <div>
+                <p className="text-sm text-gray-500">Brand</p>
+                <p className="font-semibold">{product.brand.name}</p>
               </div>
             </div>
-            <div className="font-bold text-xl mb-2">
-              <span className="font-bold">User: </span>
-              <div className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow mt-5 flex">
-                <img
-                  className="w-24 h-24 bg-white border border-gray-200 rounded-lg shadow"
-                  src={product.user.image}
-                  alt={product.user._id}
-                />
-                <h5 className="ml-2 text-2xl font-semibold tracking-tight text-gray-900">
-                  {product.user.username}
-                </h5>
+            <div className="flex items-center gap-3 border rounded-md p-3">
+              <img
+                src={product.user.image}
+                alt={product.user._id}
+                className="w-12 h-12 rounded-full object-cover"
+              />
+              <div>
+                <p className="text-sm text-gray-500">Seller</p>
+                <p className="font-semibold">{product.user.username}</p>
               </div>
             </div>
-            <div className="font-bold text-xl mb-2 mt-5">
-              <span className="font-bold">Stock: </span> {product.stock}
-            </div>
+            <button
+              onClick={handleCart}
+              className="mt-6 flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-md text-lg font-semibold transition"
+            >
+              <FaCartPlus />
+              Add to Cart
+            </button>
           </div>
         </div>
-        <button className="btn-icon m5-10" onClick={handleCart}>
-          <FaCartPlus className="btn-icons" /> Add to Cart
-        </button>
       </section>
       <CreateReview id={product.id} />
       <ProductReviews id={product.id} />

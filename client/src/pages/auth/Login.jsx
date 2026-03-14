@@ -64,7 +64,7 @@ const Login = () => {
   return (
     <>
       <PublicHeader />
-      <section className="max-w-4xl p-6 mx-auto bg-blue-500 rounded-md shadow-md my-20">
+      <section className="max-w-4xl p-6 mx-auto bg-blue-500 rounded-md shadow-md my-10">
         <h2 className="text-xl font-bold text-white capitalize mb-5">
           Login User
         </h2>

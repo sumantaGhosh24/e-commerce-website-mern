@@ -54,153 +54,123 @@ const EditOrderForm = ({order}) => {
 
   return (
     <>
-      <section className="max-w-7xl p-6 mx-auto my-20">
+      <section className="container p-6 mx-auto my-10">
         {isError && (
           <h2 className="text-xl font-bold capitalize text-red-500 mb-5">
             {error.message}
           </h2>
         )}
-        <h2 className="text-xl font-bold capitalize mb-5">Detailed Order</h2>
-        <div className="rounded overflow-hidden shadow-xl">
-          <div className="px-6 py-4">
-            <div className="font-bold text-xl mb-2">
-              <div className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow">
+        <h2 className="text-3xl font-bold mb-8">Order Details</h2>
+        <div className="grid lg:grid-cols-3 gap-8">
+          <div className="lg:col-span-2 space-y-8">
+            <div className="shadow-md rounded-md p-6">
+              <h3 className="text-xl font-bold mb-4">Customer</h3>
+              <div className="flex items-center gap-4">
                 <img
-                  className="w-24 h-24 p-6 bg-white border border-gray-200 rounded-lg shadow mb-3"
                   src={order?.user?.image}
                   alt={order?.user?._id}
+                  className="w-16 h-16 rounded-full object-cover"
                 />
-                <p className="mb-3 font-normal text-gray-500">
-                  {order?.user?.username}
-                </p>
-                <p className="mb-3 font-normal text-gray-500">
-                  {order?.user?.email}
-                </p>
-                <p className="mb-3 font-normal text-gray-500">
-                  {order?.user?.mobileNumber}
-                </p>
+                <div>
+                  <p className="font-semibold">{order?.user?.username}</p>
+                  <p className="text-sm">{order?.user?.email}</p>
+                  <p className="text-sm">{order?.user?.mobileNumber}</p>
+                </div>
               </div>
             </div>
-            <div className="font-bold text-xl mb-2">
-              <div className="flex">
+            <div className="shadow-md rounded-md p-6">
+              <h3 className="text-xl font-bold mb-4">Order Items</h3>
+              <div className="space-y-4">
                 {order?.orderItems?.map((item, i) => (
                   <div
-                    className="max-2-sm p-6 bg-white border border-gray-200 rounded-lg shadow mx-3"
                     key={i}
+                    className="flex items-center justify-between border-b pb-4"
                   >
-                    <img
-                      className="w-24 h-24 p-6 bg-white border border-gray-200 rounded-lg shadow mb-3"
-                      src={item?.product?.image[0]}
-                      alt={item?.product?._id}
-                    />
-                    <p className="mb-3 font-normal text-gray-500">
-                      <span className="font-bold">Product: </span>
-                      {item?.product?.title}
-                    </p>
-                    <p className="mb-3 font-normal text-gray-500">
-                      <span className="font-bold">Quantity: </span>
-                      {item.quantity}
-                    </p>
+                    <div className="flex items-center gap-4">
+                      <img
+                        src={item?.product?.image[0]}
+                        alt={item?.product?._id}
+                        className="w-16 h-16 rounded-md object-cover"
+                      />
+                      <div>
+                        <p className="font-semibold">{item?.product?.title}</p>
+                        <p className="text-sm">Quantity: {item.quantity}</p>
+                      </div>
+                    </div>
                   </div>
                 ))}
               </div>
             </div>
-            <div className="font-bold text-xl mb-2">
-              <p className="mb-3 font-normal text-gray-500">
-                <span className="font-bold">Id: </span>
-                {order.paymentResult.id}
+            <div className="shadow-md rounded-md p-6">
+              <h3 className="text-xl font-bold mb-4">Shipping Address</h3>
+              <p>{order.shippingAddress.address}</p>
+              <p>
+                {order.shippingAddress.city}, {order.shippingAddress.state}
               </p>
-              <p className="mb-3 font-normal text-gray-500">
-                <span className="font-bold">Status: </span>
-                {order.paymentResult.status}
-              </p>
-              <p className="mb-3 font-normal text-gray-500">
-                <span className="font-bold">Order Id: </span>
-                {order.paymentResult.razorpay_order_id}
-              </p>
-              <p className="mb-3 font-normal text-gray-500">
-                <span className="font-bold">Payment Id: </span>
-                {order.paymentResult.razorpay_payment_id}
-              </p>
-              <p className="mb-3 font-normal text-gray-500">
-                <span className="font-bold">Signature: </span>
-                {order.paymentResult.razorpay_signature}
+              <p>
+                {order.shippingAddress.country} - {order.shippingAddress.pin}
               </p>
             </div>
-            <div className="font-bold text-xl mb-2">
-              <p className="mb-3 font-normal text-gray-500">
-                <span className="font-bold">Address: </span>
-                {order.shippingAddress.address}
+            <div className="shadow-md rounded-md p-6">
+              <h3 className="text-xl font-bold mb-4">Payment Info</h3>
+              <div className="text-sm space-y-2">
+                <p>
+                  <span className="font-semibold">Status:</span>{" "}
+                  {order.paymentResult.status}
+                </p>
+                <p>
+                  <span className="font-semibold">Payment ID:</span>{" "}
+                  {order.paymentResult.razorpay_payment_id}
+                </p>
+                <p>
+                  <span className="font-semibold">Order ID:</span>{" "}
+                  {order.paymentResult.razorpay_order_id}
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="shadow-md rounded-md p-6 h-fit">
+            <h3 className="text-xl font-bold mb-6">Order Summary</h3>
+            <div className="space-y-3 text-sm">
+              <div className="flex justify-between">
+                <span>Price</span>
+                <span>{order.price.toFixed(2)}</span>
+              </div>
+              <div className="flex justify-between">
+                <span>Tax</span>
+                <span>{order.taxPrice.toFixed(2)}</span>
+              </div>
+              <div className="flex justify-between">
+                <span>Shipping</span>
+                <span>{order.shippingPrice.toFixed(2)}</span>
+              </div>
+              <div className="border-t pt-3 flex justify-between font-bold text-lg">
+                <span>Total</span>
+                <span>{order.totalPrice.toFixed(2)}</span>
+              </div>
+            </div>
+            <div className="mt-6 space-y-2 text-sm">
+              <p>
+                <span className="font-semibold">Order Status:</span>{" "}
+                {order.orderStatus}
               </p>
-              <p className="mb-3 font-normal text-gray-500">
-                <span className="font-bold">City: </span>
-                {order.shippingAddress.city}
+              <p>
+                <span className="font-semibold">Paid:</span>{" "}
+                {order.isPaid ? "Yes" : "No"}
               </p>
-              <p className="mb-3 font-normal text-gray-500">
-                <span className="font-bold">Pin: </span>
-                {order.shippingAddress.pin}
-              </p>
-              <p className="mb-3 font-normal text-gray-500">
-                <span className="font-bold">Country: </span>
-                {order.shippingAddress.country}
-              </p>
-              <p className="mb-3 font-normal text-gray-500">
-                <span className="font-bold">State: </span>
-                {order.shippingAddress.state}
+              <p>
+                <span className="font-semibold">Delivered:</span>{" "}
+                {order.isDeliverd ? "Yes" : "No"}
               </p>
             </div>
-            <div className="font-normal mb-3 text-gray-500">
-              <span className="font-bold">Order Status: </span>
-              {order.orderStatus}
-            </div>
-            <div className="font-normal mb-3 text-gray-500">
-              <span className="font-bold">Price: </span>
-              {order.price}
-            </div>
-            <div className="font-normal mb-3 text-gray-500">
-              <span className="font-bold">Tax Price: </span>
-              {order.taxPrice}
-            </div>
-            <div className="font-normal mb-3 text-gray-500">
-              <span className="font-bold">Shipping Price: </span>
-              {order.shippingPrice}
-            </div>
-            <div className="font-normal mb-3 text-gray-500">
-              <span className="font-bold">Total Price: </span>
-              {order.totalPrice}
-            </div>
-            <div className="font-normal mb-3 text-gray-500">
-              <span className="font-bold">Paid: </span>
-              {order.isPaid ? <span>paid</span> : <span>not paid</span>}
-            </div>
-            <div className="font-normal mb-3 text-gray-500">
-              <span className="font-bold">Paid At: </span>
-              {order.paidAt}
-            </div>
-            <div className="font-normal mb-3 text-gray-500">
-              <span className="font-bold">Deliver: </span>
-              {order.isDeliverd ? (
-                <span>deliver</span>
-              ) : (
-                <span>not deliver</span>
-              )}
-            </div>
-            <div className="font-normal mb-3 text-gray-500">
-              <span className="font-bold">Deliver At: </span>
-              {order.deliverAt}
-            </div>
-            <div className="font-normal mb-3 text-gray-500">
-              <span className="font-bold">Created At: </span>
-              {order.createdAt}
-            </div>
-            <div className="font-normal mb-3 text-gray-500">
-              <span className="font-bold">Updated At: </span>
-              {order.updatedAt}
+            <div className="mt-6 text-xs text-gray-500">
+              <p>Created: {order.createdAt}</p>
+              <p>Updated: {order.updatedAt}</p>
             </div>
           </div>
         </div>
       </section>
-      <section className="max-w-7xl p-6 mx-auto my-20 shadow-xl rounded-xl bg-blue-500">
+      <section className="container p-6 mx-auto my-10 shadow-md rounded-md bg-blue-500">
         <h2 className="text-xl font-bold capitalize mb-5 text-white">
           Update Order
         </h2>

@@ -103,10 +103,10 @@ const ManageOrder = ({orderId, ind}) => {
           </p>
         </td>
         <td className="px-6 py-4 uppercase">{order.orderStatus}</td>
-        <td className="px-6 py-4">{order.price}</td>
-        <td className="px-6 py-4">{order.taxPrice}</td>
-        <td className="px-6 py-4">{order.shippingPrice}</td>
-        <td className="px-6 py-4">{order.totalPrice}</td>
+        <td className="px-6 py-4">{order.price.toFixed(2)}</td>
+        <td className="px-6 py-4">{order.taxPrice.toFixed(2)}</td>
+        <td className="px-6 py-4">{order.shippingPrice.toFixed(2)}</td>
+        <td className="px-6 py-4">{order.totalPrice.toFixed(2)}</td>
         <td className="px-6 py-4">
           {order.isPaid ? <span>paid</span> : <span>not paid</span>}
         </td>
@@ -114,9 +114,9 @@ const ManageOrder = ({orderId, ind}) => {
         <td className="px-6 py-4">
           {order.isDeliverd ? <span>deliver</span> : <span>not deliver</span>}
         </td>
-        <td className="px-6 py-4">{order.deliverAt}</td>
-        <td className="px-6 py-4">{order.createdAt}</td>
-        <td className="px-6 py-4">{order.updatedAt}</td>
+        <td className="px-6 py-4">
+          {new Date(order.deliverAt).toLocaleDateString()}
+        </td>
         <td className="px-6 py-4">
           <Link className="btn-icon" to={`/admin-order/${order.id}`}>
             <FaEye className="mr-2 h-10 w-10" /> Manage Order

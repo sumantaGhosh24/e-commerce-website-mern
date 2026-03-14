@@ -12,7 +12,7 @@ const Product = ({productId}) => {
 
   if (product) {
     return (
-      <div className="bg-white border border-gray-200 rounded-lg shadow">
+      <div className="bg-white border border-gray-200 rounded-md shadow">
         <Link to={`/product/${product._id}`}>
           <img
             className="rounded-t-lg"

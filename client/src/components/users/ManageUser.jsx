@@ -48,31 +48,32 @@ const ManageUser = ({userId, ind}) => {
         <td className="px-6 py-4">{user.addressline}</td>
         <td className="px-6 py-4">
           {user.status === "active" ? (
-            <p className="bg-green-500 p-2 rounded-lg text-white">Active</p>
+            <p className="bg-green-500 p-2 rounded-md text-white uppercase">
+              Active
+            </p>
           ) : (
-            <p className="bg-red-500 p-2 rounded-lg text-white">Inactive</p>
+            <p className="bg-red-500 p-2 rounded-md text-white uppercase">
+              Inactive
+            </p>
           )}
         </td>
         <td className="px-6 py-4">
           {user.role === "admin" ? (
-            <p className="bg-pink-500 p-2 rounded-lg text-white">Admin</p>
+            <p className="bg-pink-500 p-2 rounded-md text-white uppercase">
+              Admin
+            </p>
           ) : (
-            <p className="bg-blue-500 p-2 rounded-lg text-white">User</p>
+            <p className="bg-blue-500 p-2 rounded-md text-white uppercase">
+              User
+            </p>
           )}
         </td>
         <td className="px-6 py-4">
-          {user.createdAt ?? (
-            <p className="bg-red-500 p-2 rounded-lg text-white">not defined</p>
-          )}
-        </td>
-        <td className="px-6 py-4">
-          {user.updatedAt ?? (
-            <p className="bg-red-500 p-2 rounded-lg text-white">not defined</p>
-          )}
-        </td>
-        <td className="px-6 py-4">
-          <button className="btn-icon" onClick={handleDelete}>
-            <FaTrash className="mr-2 h-10 w-10" /> Delete User
+          <button
+            className="btn-icon truncate flex items-center"
+            onClick={handleDelete}
+          >
+            <FaTrash className="mr-2 h-10 w-8" /> Delete User
           </button>
         </td>
       </tr>

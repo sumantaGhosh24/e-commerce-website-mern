@@ -9,7 +9,7 @@ const ReviewCard = ({reviewId, id}) => {
 
   if (review) {
     return (
-      <div className="flex-1 w-1/4 md:w-2/5 lg:w-4/5 mt-5 mx-5 shadow-lg rounded p-5">
+      <div className="flex-1 w-1/4 md:w-2/5 lg:w-4/5 mt-5 mx-5 shadow-md rounded p-5">
         <div className="mb-8">
           <div className="text-gray-900 font-bold text-xl mb-2">
             {review.comment}

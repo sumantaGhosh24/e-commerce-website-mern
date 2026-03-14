@@ -76,7 +76,7 @@ const AdminManageBrand = () => {
 
   return (
     <>
-      <section className="max-w-7xl p-6 mx-auto my-20 shadow-xl rounded-xl">
+      <section className="container mx-auto p-6 my-10 shadow-md rounded-md">
         <h2 className="text-3xl font-bold capitalize mb-10">Manage Brand</h2>
         <Link className="btn-icon" to="/admin-create-brand">
           <FaPlus className="btn-icons" /> Create Brand

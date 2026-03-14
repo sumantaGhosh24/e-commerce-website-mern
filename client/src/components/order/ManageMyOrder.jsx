@@ -16,9 +16,9 @@ const ManageMyOrder = ({orderId, ind}) => {
         </th>
         <td className="px-6 py-4">{order.id}</td>
         <td className="px-6 py-4">
-          <div className="max-w-sm p-2 mb-3 bg-white border border-gray-200 rounded-lg shadow">
+          <div className="max-w-sm p-2 mb-3 bg-white border border-gray-200 rounded-md shadow">
             <img
-              className="w-24 h-24 p-2 bg-white border border-gray-200 rounded-lg shadow mb-3"
+              className="w-24 h-24 p-2 bg-white border border-gray-200 rounded-md shadow mb-3"
               src={order?.user?.image}
               alt={order?.user?._id}
             />
@@ -37,11 +37,11 @@ const ManageMyOrder = ({orderId, ind}) => {
           <div className="flex">
             {order?.orderItems?.map((item, i) => (
               <div
-                className="max-w-sm p-2 mb-3 bg-white border border-gray-200 rounded-lg shadow mx-3"
+                className="max-w-sm p-2 mb-3 bg-white border border-gray-200 rounded-md shadow mx-3"
                 key={i}
               >
                 <img
-                  className="w-24 h-24 p-2 bg-white border border-gray-200 rounded-lg shadow mb-3"
+                  className="w-24 h-24 p-2 bg-white border border-gray-200 rounded-md shadow mb-3"
                   src={item?.product?.image[0]}
                   alt={item?.product?._id}
                 />

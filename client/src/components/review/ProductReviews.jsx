@@ -33,7 +33,7 @@ const ProductReviews = ({id}) => {
       ));
 
     content = (
-      <div className="container mx-auto shadow-xl rounded-xl my-10 p-5">
+      <div className="container mx-auto shadow-md rounded-md my-10 p-5">
         <h1 className="mb-5 text-2xl font-bold">Product Reviews</h1>
         <div className="flex items-center justify-between flex-wrap">
           {tableContent}

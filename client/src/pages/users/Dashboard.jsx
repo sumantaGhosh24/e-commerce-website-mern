@@ -98,7 +98,7 @@ const Dashboard = () => {
 
   return (
     <>
-      <section className="max-w-7xl p-6 mx-auto my-20 shadow-xl rounded-xl">
+      <section className="container p-6 mx-auto my-10 shadow-md rounded-md">
         <h2 className="text-xl font-bold capitalize mb-5">Admin Dashboard</h2>
         <div className="flex flex-wrap">
           <div className="w-full md:w-1/2 xl:w-2/6 mb-4">

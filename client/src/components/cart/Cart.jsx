@@ -89,12 +89,7 @@ const Cart = ({product, ind}) => {
         {ind}
       </th>
       <td className="px-6 py-4">
-        <div className="max-w-sm p-2 bg-white border border-gray-200 rounded-lg shadow">
-          <img
-            className="w-24 h-24 p-2 mb-3 bg-white border border-gray-200 rounded-lg shadow"
-            src={product?.product?.image[0]}
-            alt={product?.product?._id}
-          />
+        <div className="max-w-sm p-2 bg-white border border-gray-200 rounded shadow">
           <h5 className="mb-2 font-bold tracking-tight">
             {getWordStr(product?.product?.title)}
           </h5>

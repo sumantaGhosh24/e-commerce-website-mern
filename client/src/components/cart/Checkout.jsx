@@ -84,14 +84,12 @@ const Checkout = ({cart}) => {
   };
 
   return (
-    <section className="max-w-7xl p-6 mx-auto bg-blue-500 rounded-md shadow-md my-20">
-      <h1 className="text-xl font-bold text-white capitalize mb-5">Checkout</h1>
+    <section className="container p-6 mx-auto rounded-md shadow-md my-10">
+      <h1 className="text-xl font-bold capitalize mb-5">Checkout</h1>
       <form onSubmit={handleCheckout}>
         <div className="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
           <div>
-            <label className="text-white" htmlFor="address">
-              Address
-            </label>
+            <label htmlFor="address">Address</label>
             <input
               id="address"
               name="address"
@@ -103,9 +101,7 @@ const Checkout = ({cart}) => {
             />
           </div>
           <div>
-            <label className="text-white" htmlFor="city">
-              City
-            </label>
+            <label htmlFor="city">City</label>
             <input
               id="city"
               name="city"
@@ -117,9 +113,7 @@ const Checkout = ({cart}) => {
             />
           </div>
           <div>
-            <label className="text-white" htmlFor="pin">
-              Pin
-            </label>
+            <label htmlFor="pin">Pin</label>
             <input
               id="pin"
               name="pin"
@@ -131,9 +125,7 @@ const Checkout = ({cart}) => {
             />
           </div>
           <div>
-            <label className="text-white" htmlFor="state">
-              State
-            </label>
+            <label htmlFor="state">State</label>
             <input
               id="state"
               name="state"
@@ -145,9 +137,7 @@ const Checkout = ({cart}) => {
             />
           </div>
           <div>
-            <label className="text-white" htmlFor="country">
-              Country
-            </label>
+            <label htmlFor="country">Country</label>
             <input
               id="country"
               name="country"
@@ -160,7 +150,7 @@ const Checkout = ({cart}) => {
           </div>
         </div>
         <div className="flex justify-end mt-6">
-          <button className="btn btn-red" type="submit">
+          <button className="btn btn-red w-full" type="submit">
             Checkout
           </button>
         </div>

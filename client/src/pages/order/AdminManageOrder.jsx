@@ -88,12 +88,6 @@ const AdminManageOrder = () => {
                 Delivered At
               </th>
               <th scope="col" className="px-6 py-3">
-                Created At
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Updated At
-              </th>
-              <th scope="col" className="px-6 py-3">
                 Actions
               </th>
             </tr>
@@ -106,7 +100,7 @@ const AdminManageOrder = () => {
 
   return (
     <>
-      <section className="max-w-7xl p-6 mx-auto my-20 shadow-xl rounded-xl">
+      <section className="container p-6 mx-auto my-10 shadow-md rounded-md">
         <h2 className="text-3xl font-bold capitalize mb-10">Manage Order</h2>
         {content}
       </section>
